@@ -31,6 +31,11 @@ export default tseslint.config(
     },
   },
   {
+    files: ['**/metro.config.js'],
+    languageOptions: { sourceType: 'commonjs' },
+    rules: { '@typescript-eslint/no-require-imports': 'off' },
+  },
+  {
     files: ['scripts/**', '**/cli.ts', 'apps/server/src/index.ts', 'apps/server/src/seed.ts'],
     rules: { 'no-console': 'off' },
   },
