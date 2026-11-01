@@ -6,7 +6,7 @@ import {
   type ProviderResponse,
 } from './types.js'
 
-export const DEFAULT_ANTHROPIC_MODEL = 'claude-sonnet-5'
+export const DEFAULT_ANTHROPIC_MODEL = 'claude-sonnet-5-5'
 
 export type AnthropicOptions = {
   apiKey: string

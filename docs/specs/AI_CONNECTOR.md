@@ -51,7 +51,7 @@ use `fetch` only, so the same code runs in Node and in the browser.
 | `mock`                | Replays canned outputs; used by tests and the demo recording    |
 
 Configuration: `FRESHED_AI_KEY` (required), `FRESHED_AI_PROVIDER` (`anthropic` default),
-`FRESHED_AI_MODEL` (Anthropic default `claude-sonnet-5`; required for OpenAI-compatible),
+`FRESHED_AI_MODEL` (Anthropic default `claude-sonnet-5-5`; required for OpenAI-compatible),
 `FRESHED_AI_BASE_URL` (optional). The default model is a constant you can override; pick whatever
 current model your provider recommends for tool use.
 
