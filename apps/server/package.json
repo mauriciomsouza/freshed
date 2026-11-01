@@ -1,0 +1,30 @@
+{
+  "name": "@freshed/server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "freshed server: drafts, immutable published versions and the public read API, on Postgres.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "migrate": "tsx src/migrate-cli.ts",
+    "seed": "tsx src/seed.ts",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@freshed/ai": "workspace:*",
+    "@freshed/example-brew": "workspace:*",
+    "@freshed/schema": "workspace:*",
+    "@hono/node-server": "2.1.5",
+    "hono": "4.13.16",
+    "pg": "8.23.1",
+    "tsx": "4.23.15",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.14",
+    "@types/pg": "8.23.1"
+  }
+}
