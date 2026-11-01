@@ -1,0 +1,5 @@
+{
+  "registry": "src/freshed/registry.ts",
+  "componentsDir": "src/freshed/components",
+  "context": "Brew is a coffee subscription app. Warm, plain, friendly copy. Short buttons. Every image needs alt text."
+}

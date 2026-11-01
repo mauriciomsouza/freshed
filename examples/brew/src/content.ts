@@ -12,7 +12,7 @@ export const welcome: Screen = {
   root: {
     id: 'root',
     type: 'Stack',
-    props: { gap: 'lg', padding: 'lg' },
+    props: { gap: 'lg', padding: 'lg', grow: true },
     children: [
       {
         id: 'hero',
@@ -63,7 +63,7 @@ export const taste: Screen = {
   root: {
     id: 'root',
     type: 'Stack',
-    props: { gap: 'md', padding: 'lg' },
+    props: { gap: 'md', padding: 'lg', grow: true },
     children: [
       {
         id: 'step',
@@ -120,7 +120,7 @@ export const cadence: Screen = {
   root: {
     id: 'root',
     type: 'Stack',
-    props: { gap: 'md', padding: 'lg' },
+    props: { gap: 'md', padding: 'lg', grow: true },
     children: [
       {
         id: 'step',
@@ -182,7 +182,7 @@ export const ready: Screen = {
   root: {
     id: 'root',
     type: 'Stack',
-    props: { gap: 'lg', padding: 'lg' },
+    props: { gap: 'lg', padding: 'lg', grow: true },
     children: [
       {
         id: 'hero',
@@ -222,7 +222,7 @@ export const promoHoliday: Screen = {
   root: {
     id: 'root',
     type: 'Stack',
-    props: { gap: 'lg', padding: 'lg' },
+    props: { gap: 'lg', padding: 'lg', grow: true },
     children: [
       {
         id: 'hero',

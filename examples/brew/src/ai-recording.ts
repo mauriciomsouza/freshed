@@ -37,7 +37,7 @@ export const recordedPlan = {
       root: {
         id: 'root',
         type: 'Stack',
-        props: { gap: 'lg', padding: 'lg' },
+        props: { gap: 'lg', padding: 'lg', grow: true },
         children: [
           {
             id: 'hero',

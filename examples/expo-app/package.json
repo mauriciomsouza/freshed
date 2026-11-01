@@ -1,0 +1,32 @@
+{
+  "name": "@freshed/example-expo-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Brew: a fictional coffee subscription app rendering its onboarding from freshed.",
+  "license": "MIT",
+  "main": "index.ts",
+  "exports": {
+    "./registry": "./src/freshed/registry.ts",
+    "./illustrations": "./src/freshed/illustrations.tsx"
+  },
+  "scripts": {
+    "start": "expo start",
+    "ios": "expo start --ios",
+    "android": "expo start --android",
+    "web": "expo start --web",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@freshed/example-brew": "workspace:*",
+    "@freshed/react-native": "workspace:*",
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "expo": "~58.0.22",
+    "expo-clipboard": "~58.0.4",
+    "expo-status-bar": "~58.0.4",
+    "react": "19.3.0",
+    "react-native": "0.88.1"
+  },
+  "devDependencies": {
+    "@types/react": "19.3.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "expo": {
+    "name": "Brew",
+    "slug": "brew-freshed-example",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "brew",
+    "ios": { "supportsTablet": false, "bundleIdentifier": "com.example.brew" },
+    "android": { "package": "com.example.brew" },
+    "web": { "bundler": "metro" }
+  }
+}
