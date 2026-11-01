@@ -1,0 +1,18 @@
+{
+  "name": "@freshed/example-brew",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fictional \"Brew\" coffee subscription app: component specs and seed content shared by the server, Studio and Expo example.",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@freshed/schema": "workspace:*"
+  }
+}
