@@ -6,7 +6,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "FRESHED_SEED=brew FRESHED_ADMIN_KEY=${FRESHED_ADMIN_KEY:-fr_admin_dev_only_not_for_production} FRESHED_PUBLIC_KEY=${FRESHED_PUBLIC_KEY:-fr_pub_dev_only_not_for_production} tsx watch src/index.ts",
     "start": "tsx src/index.ts",
     "migrate": "tsx src/migrate-cli.ts",
     "seed": "tsx src/seed.ts",

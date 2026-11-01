@@ -41,6 +41,11 @@ async function main() {
     console.log(
       `freshed server on http://localhost:${port} (${process.env.DATABASE_URL ? 'postgres' : 'pglite'})`,
     )
+    if (process.env.FRESHED_ADMIN_KEY?.includes('dev_only')) {
+      console.log(
+        'Development keys in use (see apps/server/package.json). Do not use in production.',
+      )
+    }
     console.log(
       ai
         ? `Server-side AI enabled (${ai.id}, ${ai.model})`

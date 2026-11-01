@@ -14,7 +14,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup src/cli.ts --format esm --clean --no-splitting --noExternal @freshed/ai --noExternal @freshed/schema",
+    "build": "tsup",
     "dev": "tsx src/cli.ts",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run"

@@ -1,0 +1,40 @@
+# Self-host freshed: Postgres + the API server.
+#   cp .env.example .env   # then set real keys
+#   docker compose up
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: freshed
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-freshed}
+      POSTGRES_DB: freshed
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U freshed']
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+  server:
+    build:
+      context: .
+      dockerfile: apps/server/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://freshed:${POSTGRES_PASSWORD:-freshed}@db:5432/freshed
+      FRESHED_ADMIN_KEY: ${FRESHED_ADMIN_KEY:?Set FRESHED_ADMIN_KEY in .env}
+      FRESHED_PUBLIC_KEY: ${FRESHED_PUBLIC_KEY:?Set FRESHED_PUBLIC_KEY in .env}
+      FRESHED_SEED: ${FRESHED_SEED:-brew}
+      FRESHED_CORS: ${FRESHED_CORS:-http://localhost:5173}
+      # Optional server-side AI. Leave empty to disable POST /v1/ai/generate.
+      FRESHED_AI_KEY: ${FRESHED_AI_KEY:-}
+      FRESHED_AI_PROVIDER: ${FRESHED_AI_PROVIDER:-anthropic}
+      FRESHED_AI_MODEL: ${FRESHED_AI_MODEL:-}
+    ports:
+      - '8787:8787'
+
+volumes:
+  pgdata:
