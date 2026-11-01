@@ -1,0 +1,35 @@
+{
+  "name": "@freshed/ai",
+  "version": "0.1.0",
+  "description": "freshed ai: turn one prompt into draft screens, flow edges and the app components they need. Bring your own LLM key.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "import": "./dist/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --dts --clean",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@freshed/schema": "workspace:*",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "tsup": "9.0.0",
+    "@freshed/example-brew": "workspace:*"
+  }
+}
