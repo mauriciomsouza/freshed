@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>freshed · launch poster</title>
+    <link rel="stylesheet" href="poster.css" />
+    <style>
+      .poster {
+        background:
+          radial-gradient(ellipse 620px 560px at 78% 74%, rgb(64 82 230 / 0.42), transparent 70%),
+          radial-gradient(ellipse 900px 500px at 10% 0%, rgb(127 140 255 / 0.1), transparent 70%),
+          var(--bg);
+      }
+      h1 {
+        margin-top: 76px !important;
+      }
+      .sub {
+        margin-top: 34px;
+        max-width: 760px;
+      }
+      .hero {
+        position: absolute;
+        inset: 0;
+        perspective: 2400px;
+      }
+      .studio {
+        position: absolute;
+        left: -48px;
+        top: 660px;
+        padding: 0;
+        overflow: hidden;
+        transform: rotateY(18deg) rotateX(6deg) rotateZ(-2deg);
+        transform-origin: left center;
+        border-color: #2c2c34;
+      }
+      .studio::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(90deg, rgb(12 12 15 / 0.65), transparent 40%),
+          linear-gradient(0deg, rgb(12 12 15 / 0.9), transparent 35%);
+      }
+      .phone.main {
+        left: 612px;
+        top: 560px;
+        transform: rotateY(-16deg) rotateX(4deg) rotateZ(1.5deg);
+        box-shadow:
+          inset 0 0 0 1.5px #3d3d46,
+          inset 0 0 0 5px #0d0d10,
+          -40px 70px 120px -30px rgb(0 0 0 / 0.9),
+          0 0 0 1px rgb(127 140 255 / 0.25),
+          0 0 120px 10px rgb(90 105 255 / 0.28);
+      }
+      .json {
+        position: absolute;
+        left: 96px;
+        top: 930px;
+        padding: 22px 26px;
+        background: #17171c;
+        border: 1px solid #34343e;
+        border-radius: 14px;
+        box-shadow: 0 40px 80px -24px rgb(0 0 0 / 0.9);
+        transform: rotateZ(-2deg);
+      }
+      .json .head {
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--mono);
+        font-size: 15px;
+        color: var(--text-3);
+        margin-bottom: 10px;
+      }
+      .wire {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1080px;
+        height: 1350px;
+        z-index: 3 !important;
+      }
+      .chip.live {
+        position: absolute;
+        left: 452px;
+        top: 612px;
+        transform: rotateZ(-3deg);
+      }
+    </style>
+  </head>
+  <body>
+    <section class="poster">
+      <div class="table"></div>
+      <header class="top">
+        <div class="wordmark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="5"
+              y="1.5"
+              width="14"
+              height="21"
+              rx="4"
+              fill="#16161a"
+              stroke="#ececf0"
+              stroke-width="1.6"
+            />
+            <rect x="8.25" y="6" width="7.5" height="4.5" rx="1.25" fill="#7f8cff" />
+            <rect
+              x="8.25"
+              y="12.5"
+              width="7.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+            <rect
+              x="8.25"
+              y="15.75"
+              width="4.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+          </svg>
+          freshed
+        </div>
+        <div class="eyebrow">Server-driven UI for Expo</div>
+      </header>
+
+      <h1 class="display xl">New screens.<br /><span class="signal">No store release.</span></h1>
+      <p class="sub">
+        Compose screens from the components your Expo app already ships.
+        <b>Publish them as JSON.</b>
+      </p>
+
+      <div class="hero">
+        <div class="card studio">
+          <div class="crop" style="--x: 945; --y: 180; --w: 1000; --h: 900; --iw: 2880; --k: 0.5">
+            <img src="../../docs/design/screens/screens-editor-dark.png" alt="" />
+          </div>
+        </div>
+
+        <div class="json">
+          <div class="head">
+            <span>welcome.json</span><span style="color: var(--live)">● valid</span>
+          </div>
+          <pre
+            class="code"
+          ><span class="p">{</span> <span class="k">"type"</span>: <span class="s">"Hero"</span>,
+  <span class="k">"props"</span>: <span class="p">{</span>
+    <span class="k">"eyebrow"</span>: <span class="s">"Brew"</span>,
+    <span class="k">"image"</span>: <span class="s">"asset:beans"</span>,
+    <span class="k">"tone"</span>: <span class="s">"cream"</span> <span class="p">} }</span></pre>
+        </div>
+
+        <div class="phone main">
+          <div class="crop" style="--x: 2100; --y: 302; --w: 640; --h: 1256; --iw: 2880; --k: 0.5">
+            <img src="../../docs/design/screens/screens-editor-dark.png" alt="" />
+          </div>
+        </div>
+
+        <div class="chip live"><i></i><span>v3 live</span></div>
+      </div>
+
+      <footer class="bottom">
+        <div class="left">
+          <span class="tag"><i></i>Open source · free</span>
+          <span class="url">mauriciomsouza.github.io/freshed</span>
+        </div>
+        <div class="sig">
+          <div>
+            <div class="who">Mauricio Souza</div>
+            <div class="role">Design Engineer</div>
+          </div>
+          <div class="monogram">MS</div>
+        </div>
+      </footer>
+    </section>
+  </body>
+</html>

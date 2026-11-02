@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>freshed · LinkedIn carousel</title>
+    <link rel="stylesheet" href="poster.css" />
+    <style>
+      .poster {
+        background:
+          radial-gradient(ellipse 620px 520px at 82% 86%, rgb(64 82 230 / 0.3), transparent 70%),
+          var(--bg);
+      }
+      .kicker {
+        margin-top: 92px;
+        font-family: var(--mono);
+        font-size: 20px;
+        color: var(--signal);
+      }
+      .kicker + .display {
+        margin-top: 22px;
+      }
+      h2.display {
+        font-size: 84px;
+        line-height: 1.02;
+      }
+      .sub {
+        margin-top: 30px;
+        font-size: 31px;
+        max-width: 900px;
+      }
+      .visual {
+        position: absolute;
+        left: 72px;
+        right: 72px;
+        top: 660px;
+        bottom: 130px;
+      }
+      .swipe {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 19px;
+        font-weight: 560;
+        color: var(--text);
+      }
+      .swipe .arrow {
+        display: inline-grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: var(--signal);
+        color: #0c0c0f;
+        font-size: 20px;
+        font-weight: 700;
+      }
+      .light-card {
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid #2c2c34;
+        box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.85);
+      }
+
+      /* slide 1 */
+      .s1 .display {
+        margin-top: 120px;
+        font-size: 108px;
+      }
+      .s1 .phone {
+        left: 600px;
+        top: 590px;
+        transform: rotateZ(4deg);
+        box-shadow:
+          inset 0 0 0 1.5px #3d3d46,
+          inset 0 0 0 5px #0d0d10,
+          0 60px 110px -30px rgb(0 0 0 / 0.9),
+          0 0 120px 10px rgb(90 105 255 / 0.28);
+      }
+      .s1 .json {
+        position: absolute;
+        left: 72px;
+        top: 800px;
+        padding: 24px 28px;
+        transform: rotateZ(-3deg);
+      }
+
+      /* slide 2 */
+      .diff {
+        padding: 0;
+        overflow: hidden;
+      }
+      .diff .file {
+        font-family: var(--mono);
+        font-size: 17px;
+        color: var(--text-3);
+        padding: 16px 24px;
+        border-bottom: 1px solid var(--line);
+      }
+      .diff .line {
+        font-family: var(--mono);
+        font-size: 23px;
+        padding: 10px 24px;
+        white-space: pre;
+      }
+      .diff .del {
+        background: rgb(240 118 123 / 0.1);
+        color: #f2a3a6;
+      }
+      .diff .add {
+        background: rgb(82 196 138 / 0.12);
+        color: #8fe0b5;
+      }
+      .pipeline {
+        margin-top: 48px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: nowrap;
+      }
+      .stage-pill {
+        height: 58px;
+        padding: 0 22px;
+        border-radius: 14px;
+        display: inline-flex;
+        align-items: center;
+        font-size: 23px;
+        font-weight: 560;
+        background: var(--panel);
+        border: 1px solid var(--line-strong);
+        white-space: nowrap;
+      }
+      .stage-pill.wait {
+        color: var(--draft);
+        border-color: rgb(227 165 74 / 0.45);
+        background: rgb(227 165 74 / 0.08);
+      }
+      .sep {
+        color: var(--text-3);
+        font-size: 22px;
+      }
+      .pipeline-note {
+        margin-top: 22px;
+        font-family: var(--mono);
+        font-size: 19px;
+        color: var(--text-3);
+      }
+
+      /* slide 3 */
+      .registry {
+        padding: 24px 28px;
+        font-size: 22px;
+      }
+
+      /* slide 5 */
+      .proto {
+        display: grid;
+        grid-template-columns: 330px 1fr;
+        gap: 0 64px;
+        align-items: start;
+        height: 100%;
+      }
+      .server {
+        padding: 26px;
+      }
+      .server h4,
+      .build h4 {
+        margin: 0 0 16px;
+        font-family: var(--mono);
+        font-size: 17px;
+        font-weight: 500;
+        color: var(--text-3);
+      }
+      .ver {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 52px;
+        padding: 0 16px;
+        border-radius: 10px;
+        font-size: 22px;
+        font-weight: 560;
+        margin-top: 8px;
+        background: var(--sunken);
+      }
+      .ver small {
+        font-family: var(--mono);
+        font-size: 16px;
+        color: var(--text-3);
+        font-weight: 400;
+      }
+      .ver.hl-a {
+        box-shadow: inset 0 0 0 1.5px var(--signal);
+      }
+      .ver.hl-b {
+        box-shadow: inset 0 0 0 1.5px var(--live);
+      }
+      .builds {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+      }
+      .build {
+        padding: 22px 24px;
+      }
+      .build .hdr {
+        font-family: var(--mono);
+        font-size: 19px;
+        color: var(--text-2);
+      }
+      .build .gets {
+        margin-top: 10px;
+        font-size: 26px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+      }
+      .build .why {
+        margin-top: 6px;
+        font-size: 19px;
+        color: var(--text-2);
+      }
+      .proto svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      /* slide 2 */
+      .s2 .visual {
+        top: 660px;
+      }
+      /* slide 6 */
+      .s6 .visual {
+        top: 470px;
+      }
+      .s6 .light-card {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+      .keynote {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 380px;
+        padding: 24px 26px;
+        font-size: 21px;
+        line-height: 1.4;
+        color: var(--text-2);
+      }
+      .keynote b {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .keynote .row {
+        display: flex;
+        gap: 12px;
+        align-items: baseline;
+      }
+      .keynote .row + .row {
+        margin-top: 14px;
+      }
+      .keynote i {
+        font-style: normal;
+        color: var(--live);
+        font-family: var(--mono);
+      }
+
+      /* slide 7 */
+      .s7 .display {
+        margin-top: 150px;
+        font-size: 120px;
+      }
+      .s7 .big-url {
+        margin-top: 40px;
+        font-family: var(--mono);
+        font-size: 38px;
+        color: var(--text);
+        letter-spacing: -0.01em;
+      }
+      .s7 .big-url span {
+        color: var(--signal);
+      }
+      .s7 .facts {
+        margin-top: 34px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .s7 .fact {
+        height: 46px;
+        padding: 0 18px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        border: 1px solid var(--line-strong);
+        font-size: 20px;
+        color: var(--text-2);
+      }
+      .s7 .phone {
+        left: 640px;
+        top: 650px;
+        transform: rotateZ(5deg);
+      }
+      .tryit {
+        position: absolute;
+        left: 72px;
+        top: 720px;
+        width: 500px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .tryit li {
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 18px;
+        align-items: start;
+        padding: 22px 0;
+        border-top: 1px solid var(--line);
+        font-size: 25px;
+        line-height: 1.3;
+        color: var(--text);
+      }
+      .tryit li:last-child {
+        border-bottom: 1px solid var(--line);
+      }
+      .tryit li span {
+        font-family: var(--mono);
+        font-size: 19px;
+        color: var(--signal);
+        padding-top: 4px;
+      }
+      .tryit small {
+        display: block;
+        margin-top: 4px;
+        font-size: 19px;
+        color: var(--text-2);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1 · cover -->
+    <section class="poster s1">
+      <div class="table"></div>
+      <header class="top">
+        <div class="wordmark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="5"
+              y="1.5"
+              width="14"
+              height="21"
+              rx="4"
+              fill="#16161a"
+              stroke="#ececf0"
+              stroke-width="1.6"
+            />
+            <rect x="8.25" y="6" width="7.5" height="4.5" rx="1.25" fill="#7f8cff" />
+            <rect
+              x="8.25"
+              y="12.5"
+              width="7.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+            <rect
+              x="8.25"
+              y="15.75"
+              width="4.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+          </svg>
+          freshed
+        </div>
+        <div class="counter"><b>1</b>/7</div>
+      </header>
+      <h2 class="display">What if app screens shipped <span class="signal">like content?</span></h2>
+      <div class="card json">
+        <pre
+          class="code"
+        ><span class="p">{</span> <span class="k">"screen"</span>: <span class="s">"welcome"</span>,
+  <span class="k">"version"</span>: <span class="s">3</span>,
+  <span class="k">"root"</span>: <span class="p">{</span>
+    <span class="k">"type"</span>: <span class="s">"Hero"</span>, <span class="p">…</span> <span class="p">} }</span></pre>
+      </div>
+      <div class="phone">
+        <div class="crop" style="--x: 2100; --y: 302; --w: 640; --h: 1256; --iw: 2880; --k: 0.44">
+          <img src="../../docs/design/screens/screens-editor-dark.png" alt="" />
+        </div>
+      </div>
+      <footer class="bottom">
+        <div class="left">
+          <span class="swipe">Swipe <span class="arrow">→</span></span>
+        </div>
+        <div class="sig">
+          <div>
+            <div class="who">Mauricio Souza</div>
+            <div class="role">Design Engineer</div>
+          </div>
+          <div class="monogram">MS</div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- 2 · problem -->
+    <section class="poster s2">
+      <header class="top">
+        <div class="wordmark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="5"
+              y="1.5"
+              width="14"
+              height="21"
+              rx="4"
+              fill="#16161a"
+              stroke="#ececf0"
+              stroke-width="1.6"
+            />
+            <rect x="8.25" y="6" width="7.5" height="4.5" rx="1.25" fill="#7f8cff" />
+            <rect
+              x="8.25"
+              y="12.5"
+              width="7.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+            <rect
+              x="8.25"
+              y="15.75"
+              width="4.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+          </svg>
+          freshed
+        </div>
+        <div class="counter"><b>2</b>/7</div>
+      </header>
+      <div class="kicker">The problem</div>
+      <h2 class="display">A one-line copy fix is a full app release.</h2>
+      <p class="sub">
+        Build it, wait for store review, roll it out, then wait for people to update. The old copy
+        stays on screen the whole time.
+      </p>
+      <div class="visual">
+        <div class="card diff">
+          <div class="file">src/screens/Welcome.tsx</div>
+          <div class="line del">- title="Fresh beans, on schedule"</div>
+          <div class="line add">+ title="Fresh beans, on your schedule"</div>
+        </div>
+        <div class="pipeline">
+          <span class="stage-pill">Build</span><span class="sep">→</span>
+          <span class="stage-pill wait">Store review</span><span class="sep">→</span>
+          <span class="stage-pill">Rollout</span><span class="sep">→</span>
+          <span class="stage-pill wait">Users update</span>
+        </div>
+        <div class="pipeline-note">Four steps to add one word.</div>
+      </div>
+      <footer class="bottom">
+        <div class="left"><span class="url">mauriciomsouza.github.io/freshed</span></div>
+        <div class="sig">
+          <div>
+            <div class="who">Mauricio Souza</div>
+            <div class="role">Design Engineer</div>
+          </div>
+          <div class="monogram">MS</div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- 3 · how: registry -->
+    <section class="poster s3">
+      <header class="top">
+        <div class="wordmark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="5"
+              y="1.5"
+              width="14"
+              height="21"
+              rx="4"
+              fill="#16161a"
+              stroke="#ececf0"
+              stroke-width="1.6"
+            />
+            <rect x="8.25" y="6" width="7.5" height="4.5" rx="1.25" fill="#7f8cff" />
+            <rect
+              x="8.25"
+              y="12.5"
+              width="7.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+            <rect
+              x="8.25"
+              y="15.75"
+              width="4.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+          </svg>
+          freshed
+        </div>
+        <div class="counter"><b>3</b>/7</div>
+      </header>
+      <div class="kicker">How it works · 1</div>
+      <h2 class="display">Register the components you already ship.</h2>
+      <p class="sub">
+        Your Hero, Card and Button stay in the app bundle. freshed learns their names and typed
+        props, nothing more.
+      </p>
+      <div class="visual">
+        <div class="card registry">
+          <pre
+            class="code"
+          ><span class="p">&lt;</span><span class="k">FreshedProvider</span> registry<span class="p">={[</span><span class="s">Hero</span>, <span class="s">Card</span>, <span class="s">Button</span>, <span class="s">List</span><span class="p">]}&gt;</span></pre>
+        </div>
+        <div class="light-card" style="margin-top: 26px; width: 936px">
+          <div class="crop" style="--x: 1000; --y: 360; --w: 1560; --h: 696; --iw: 2880; --k: 0.6">
+            <img src="../../docs/design/screens/components.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <footer class="bottom">
+        <div class="left"><span class="url">mauriciomsouza.github.io/freshed</span></div>
+        <div class="sig">
+          <div>
+            <div class="who">Mauricio Souza</div>
+            <div class="role">Design Engineer</div>
+          </div>
+          <div class="monogram">MS</div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- 4 · how: compose + publish -->
+    <section class="poster s4">
+      <header class="top">
+        <div class="wordmark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="5"
+              y="1.5"
+              width="14"
+              height="21"
+              rx="4"
+              fill="#16161a"
+              stroke="#ececf0"
+              stroke-width="1.6"
+            />
+            <rect x="8.25" y="6" width="7.5" height="4.5" rx="1.25" fill="#7f8cff" />
+            <rect
+              x="8.25"
+              y="12.5"
+              width="7.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+            <rect
+              x="8.25"
+              y="15.75"
+              width="4.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+          </svg>
+          freshed
+        </div>
+        <div class="counter"><b>4</b>/7</div>
+      </header>
+      <div class="kicker">How it works · 2</div>
+      <h2 class="display">Compose screens. Publish a version.</h2>
+      <p class="sub">
+        The preview uses the app's own renderer. Every publish is an <b>immutable version</b>;
+        rolling back publishes a copy, so history only grows.
+      </p>
+      <div class="visual">
+        <div class="light-card" style="width: 936px">
+          <div
+            class="crop"
+            style="--x: 1300; --y: 172; --w: 1580; --h: 620; --iw: 2880; --k: 0.5924"
+          >
+            <img src="../../docs/design/screens/version-history.png" alt="" />
+          </div>
+        </div>
+        <div style="margin-top: 26px; display: flex; gap: 14px">
+          <span class="chip"
+            ><span class="mono" style="font-size: 18px; color: var(--text-2)"
+              >GET /v1/flows/onboarding</span
+            ></span
+          >
+          <span class="chip live"><i></i><span>v3 live · ETag / 304</span></span>
+        </div>
+      </div>
+      <footer class="bottom">
+        <div class="left"><span class="url">mauriciomsouza.github.io/freshed</span></div>
+        <div class="sig">
+          <div>
+            <div class="who">Mauricio Souza</div>
+            <div class="role">Design Engineer</div>
+          </div>
+          <div class="monogram">MS</div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- 5 · the decision: protocol -->
+    <section class="poster s5">
+      <header class="top">
+        <div class="wordmark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="5"
+              y="1.5"
+              width="14"
+              height="21"
+              rx="4"
+              fill="#16161a"
+              stroke="#ececf0"
+              stroke-width="1.6"
+            />
+            <rect x="8.25" y="6" width="7.5" height="4.5" rx="1.25" fill="#7f8cff" />
+            <rect
+              x="8.25"
+              y="12.5"
+              width="7.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+            <rect
+              x="8.25"
+              y="15.75"
+              width="4.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+          </svg>
+          freshed
+        </div>
+        <div class="counter"><b>5</b>/7</div>
+      </header>
+      <div class="kicker">The design decision</div>
+      <h2 class="display">Data only. Old builds never break.</h2>
+      <p class="sub">
+        No code is shipped at runtime. Each build says which protocol it reads, and the server
+        <b>never sends a payload it can't render</b>.
+      </p>
+      <div class="visual">
+        <div class="proto">
+          <div class="card server">
+            <h4>Published versions</h4>
+            <div class="ver hl-b">v4 <small>protocol 2</small></div>
+            <div class="ver">v3 <small>protocol 1</small></div>
+            <div class="ver hl-a">v2 <small>protocol 1</small></div>
+            <div class="ver" style="opacity: 0.6">v1 <small>protocol 1</small></div>
+          </div>
+          <div class="builds">
+            <div class="card build" style="border-color: rgb(82 196 138 / 0.5)">
+              <div class="hdr">This week's build · Freshed-Protocol: 2</div>
+              <div class="gets">Gets v4</div>
+              <div class="why">The newest version it can read.</div>
+            </div>
+            <div class="card build" style="border-color: rgb(127 140 255 / 0.5)">
+              <div class="hdr">Two-year-old build · Freshed-Protocol: 1</div>
+              <div class="gets">Gets the newest protocol 1 version</div>
+              <div class="why">Unknown components fall back. It never crashes.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="bottom">
+        <div class="left"><span class="url">mauriciomsouza.github.io/freshed</span></div>
+        <div class="sig">
+          <div>
+            <div class="who">Mauricio Souza</div>
+            <div class="role">Design Engineer</div>
+          </div>
+          <div class="monogram">MS</div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- 6 · different: AI drafts -->
+    <section class="poster s6">
+      <header class="top">
+        <div class="wordmark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="5"
+              y="1.5"
+              width="14"
+              height="21"
+              rx="4"
+              fill="#16161a"
+              stroke="#ececf0"
+              stroke-width="1.6"
+            />
+            <rect x="8.25" y="6" width="7.5" height="4.5" rx="1.25" fill="#7f8cff" />
+            <rect
+              x="8.25"
+              y="12.5"
+              width="7.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+            <rect
+              x="8.25"
+              y="15.75"
+              width="4.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+          </svg>
+          freshed
+        </div>
+        <div class="counter"><b>6</b>/7</div>
+      </header>
+      <div class="kicker">What makes it different</div>
+      <h2 class="display">AI drafts. <span class="signal">Humans publish.</span></h2>
+      <p class="sub">
+        One prompt becomes draft screens, plus component code on a review branch when the app is
+        missing one.
+      </p>
+      <div class="visual">
+        <div class="light-card" style="border-color: #34343e">
+          <div class="crop" style="--x: 1270; --y: 180; --w: 800; --h: 1110; --iw: 2880; --k: 0.62">
+            <img src="../../docs/design/screens/ai-panel-dark.png" alt="" />
+          </div>
+        </div>
+        <div class="card keynote">
+          <div class="row">
+            <i>✓</i><span><b>Self-hosted.</b> Your Postgres, your server.</span>
+          </div>
+          <div class="row">
+            <i>✓</i><span><b>Your LLM key</b> stays in your browser tab.</span>
+          </div>
+          <div class="row">
+            <i>✓</i><span><b>No path</b> lets AI publish or merge.</span>
+          </div>
+        </div>
+      </div>
+      <footer class="bottom">
+        <div class="left"><span class="url">mauriciomsouza.github.io/freshed</span></div>
+        <div class="sig">
+          <div>
+            <div class="who">Mauricio Souza</div>
+            <div class="role">Design Engineer</div>
+          </div>
+          <div class="monogram">MS</div>
+        </div>
+      </footer>
+    </section>
+
+    <!-- 7 · CTA -->
+    <section class="poster s7">
+      <div class="table"></div>
+      <header class="top">
+        <div class="wordmark">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect
+              x="5"
+              y="1.5"
+              width="14"
+              height="21"
+              rx="4"
+              fill="#16161a"
+              stroke="#ececf0"
+              stroke-width="1.6"
+            />
+            <rect x="8.25" y="6" width="7.5" height="4.5" rx="1.25" fill="#7f8cff" />
+            <rect
+              x="8.25"
+              y="12.5"
+              width="7.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+            <rect
+              x="8.25"
+              y="15.75"
+              width="4.5"
+              height="1.75"
+              rx=".875"
+              fill="#ececf0"
+              opacity=".45"
+            />
+          </svg>
+          freshed
+        </div>
+        <div class="counter"><b>7</b>/7</div>
+      </header>
+      <h2 class="display">Try the <span class="signal">live demo.</span></h2>
+      <div class="big-url">mauriciomsouza.github.io/<span>freshed</span></div>
+      <div class="facts">
+        <span class="fact">Runs in your browser</span>
+        <span class="fact">No signup, no server</span>
+        <span class="fact">MIT license</span>
+      </div>
+      <ol class="tryit">
+        <li>
+          <span>01</span>
+          <div>Edit the welcome screen<small>Tree or JSON, live preview</small></div>
+        </li>
+        <li>
+          <span>02</span>
+          <div>Click through onboarding<small>Every event and edge in the flow</small></div>
+        </li>
+        <li>
+          <span>03</span>
+          <div>Play an AI generation<small>Pre-recorded, or bring your own key</small></div>
+        </li>
+      </ol>
+      <div class="phone">
+        <div class="crop" style="--x: 2100; --y: 284; --w: 640; --h: 1256; --iw: 2880; --k: 0.44">
+          <img src="../../docs/design/screens/flow-graph.png" alt="" />
+        </div>
+      </div>
+      <footer class="bottom">
+        <div class="left">
+          <span class="tag"><i></i>Open source · free</span>
+        </div>
+        <div class="sig">
+          <div>
+            <div class="who">Mauricio Souza</div>
+            <div class="role">Design Engineer</div>
+          </div>
+          <div class="monogram">MS</div>
+        </div>
+      </footer>
+    </section>
+  </body>
+</html>
