@@ -1,5 +1,5 @@
 {
-  "name": "@freshed/example-brew",
+  "name": "@freshed-cms/example-brew",
   "version": "0.1.0",
   "private": true,
   "description": "Fictional \"Brew\" coffee subscription app: component specs and seed content shared by the server, Studio and Expo example.",
@@ -13,6 +13,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@freshed/schema": "workspace:*"
+    "@freshed-cms/schema": "workspace:*"
   }
 }

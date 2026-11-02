@@ -6,7 +6,7 @@ import {
   type ComponentDefinition,
   type Issue,
   type Workspace,
-} from '@freshed/schema'
+} from '@freshed-cms/schema'
 import type { z } from 'zod'
 import { applyPlan } from './apply.js'
 import { GenerationPlan, PLAN_TOOL_DESCRIPTION, PLAN_TOOL_NAME, planJsonSchema } from './plan.js'

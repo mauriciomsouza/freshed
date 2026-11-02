@@ -1,4 +1,10 @@
-import type { Flow, Screen, VersionSummary, Workspace, ComponentDefinition } from '@freshed/schema'
+import type {
+  Flow,
+  Screen,
+  VersionSummary,
+  Workspace,
+  ComponentDefinition,
+} from '@freshed-cms/schema'
 import {
   createContext,
   useCallback,

@@ -1,4 +1,4 @@
-import { defineComponent, prop } from '@freshed/react-native'
+import { defineComponent, prop } from '@freshed-cms/react-native'
 import { Pressable, Text, View } from 'react-native'
 
 /**

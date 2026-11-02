@@ -1,4 +1,4 @@
-import { FLOW_END, type Flow, type Workspace } from '@freshed/schema'
+import { FLOW_END, type Flow, type Workspace } from '@freshed-cms/schema'
 import type { GenerationPlan } from './plan.js'
 
 /**

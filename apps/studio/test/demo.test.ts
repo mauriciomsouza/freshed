@@ -1,4 +1,4 @@
-import { welcome } from '@freshed/example-brew'
+import { welcome } from '@freshed-cms/example-brew'
 import { describe, expect, it } from 'vitest'
 import { demoBackend } from '../src/data/demo'
 import { parseHash, toHash } from '../src/router'

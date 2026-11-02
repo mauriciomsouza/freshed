@@ -5,7 +5,7 @@ import {
   PROTOCOL_VERSION,
   ScreenPayload,
   UnsupportedProtocolError,
-} from '@freshed/schema'
+} from '@freshed-cms/schema'
 import type { z } from 'zod'
 
 /** AsyncStorage-compatible. Pass `@react-native-async-storage/async-storage` in an app. */

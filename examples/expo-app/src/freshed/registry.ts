@@ -1,4 +1,4 @@
-import { createRegistry } from '@freshed/react-native'
+import { createRegistry } from '@freshed-cms/react-native'
 import { Button, Card, Hero, Image, List, Spacer, Stack, Text } from './components'
 // freshed:imports
 

@@ -5,5 +5,5 @@ export default defineConfig({
   entry: ['src/cli.ts'],
   format: ['esm'],
   clean: true,
-  noExternal: ['@freshed/ai', '@freshed/schema'],
+  noExternal: ['@freshed-cms/ai', '@freshed-cms/schema'],
 })

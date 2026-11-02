@@ -21,7 +21,7 @@ Node 22 and pnpm 10. Tests need no Docker and no network.
    components, and AI only creates drafts and branches.
 2. `pnpm typecheck && pnpm lint && pnpm format:check && pnpm test` pass.
 3. New behaviour has tests. Bug fixes start with a failing test.
-4. UI changes: `pnpm --filter @freshed/studio build:pages && node scripts/verify-pages.mjs`, then
+4. UI changes: `pnpm --filter @freshed-cms/studio build:pages && node scripts/verify-pages.mjs`, then
    `pnpm screenshots`, look at the PNGs (light and dark) and include them in the PR.
 5. If you change the wire format, read the versioning section of
    [SDUI_PROTOCOL.md](docs/specs/SDUI_PROTOCOL.md) first and say in the PR whether older renderers

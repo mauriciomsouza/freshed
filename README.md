@@ -70,12 +70,12 @@ VITE_FRESHED_API=http://localhost:8787 VITE_FRESHED_ADMIN_KEY=<your admin key> p
 **3. Add the renderer to your app**
 
 ```bash
-npm i @freshed/react-native
+npm i @freshed-cms/react-native
 ```
 
 ```tsx
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { createClient, FreshedFlow, FreshedProvider } from '@freshed/react-native'
+import { createClient, FreshedFlow, FreshedProvider } from '@freshed-cms/react-native'
 import { router } from 'expo-router'
 import { Linking } from 'react-native'
 import { components } from './freshed/registry'
@@ -105,7 +105,7 @@ A component is a typed props spec plus your own implementation. Props are inferr
 and the same spec is what the CMS stores and validates against.
 
 ```tsx
-import { defineComponent, prop } from '@freshed/react-native'
+import { defineComponent, prop } from '@freshed-cms/react-native'
 import { Pressable, Text } from 'react-native'
 
 export const Button = defineComponent(
@@ -165,9 +165,9 @@ your key, which stays in that tab. More in [AI_CONNECTOR.md](docs/specs/AI_CONNE
 
 ```
 packages/
-  schema/          zod schemas, validation, protocol versioning (@freshed/schema)
-  react-native/    renderer: pure core + React bindings (@freshed/react-native)
-  ai/              freshed ai: providers, generation, codegen, sync (@freshed/ai)
+  schema/          zod schemas, validation, protocol versioning (@freshed-cms/schema)
+  react-native/    renderer: pure core + React bindings (@freshed-cms/react-native)
+  ai/              freshed ai: providers, generation, codegen, sync (@freshed-cms/ai)
   cli/             npx freshed ai (freshed)
 apps/
   server/          Hono + Postgres API, SQL migrations, PGlite tests
@@ -184,7 +184,7 @@ docs/              plan, stack, protocol and AI specs, design spec, business, la
 pnpm install
 pnpm test          # schema, renderer, ai, cli, server (PGlite), studio
 pnpm typecheck && pnpm lint
-pnpm --filter @freshed/studio build:pages && node scripts/verify-pages.mjs
+pnpm --filter @freshed-cms/studio build:pages && node scripts/verify-pages.mjs
 ```
 
 ## How this repo is built

@@ -8,9 +8,9 @@ import {
   type ActionHandlers,
   type FallbackProps,
   type ResolveWarning,
-} from '@freshed/react-native'
-import { components as brewComponents } from '@freshed/example-expo-app/registry'
-import type { ComponentDefinition, Screen } from '@freshed/schema'
+} from '@freshed-cms/react-native'
+import { components as brewComponents } from '@freshed-cms/example-expo-app/registry'
+import type { ComponentDefinition, Screen } from '@freshed-cms/schema'
 import { useCallback, useMemo, useState, type ReactNode } from 'react'
 import { Text, View } from 'react-native'
 import { aiComponents } from './ai-components'

@@ -1,4 +1,4 @@
-import type { ScopedIssue, Version, VersionSummary, Workspace } from '@freshed/schema'
+import type { ScopedIssue, Version, VersionSummary, Workspace } from '@freshed-cms/schema'
 import type { Backend, Status } from './backend'
 
 /** Talks to a real freshed server with an admin key held in memory for the session. */

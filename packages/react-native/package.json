@@ -1,5 +1,5 @@
 {
-  "name": "@freshed/react-native",
+  "name": "@freshed-cms/react-native",
   "version": "0.1.0",
   "description": "Render server-driven screens and flows from freshed in Expo and React Native apps.",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@freshed/schema": "workspace:*",
+    "@freshed-cms/schema": "workspace:*",
     "zod": "4.6.7"
   },
   "peerDependencies": {
@@ -41,7 +41,7 @@
     "@types/react": "19.3.0",
     "react": "19.3.0",
     "tsup": "9.0.0",
-    "@freshed/example-brew": "workspace:*",
+    "@freshed-cms/example-brew": "workspace:*",
     "react-native": "0.88.1"
   }
 }

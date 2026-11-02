@@ -1,4 +1,4 @@
-import { providerFromEnv } from '@freshed/ai'
+import { providerFromEnv } from '@freshed-cms/ai'
 import { serve } from '@hono/node-server'
 import { createHash } from 'node:crypto'
 import { createApp } from './app.js'

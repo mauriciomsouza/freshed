@@ -1,4 +1,4 @@
-import type { ComponentDefinition, InferProps, PropsSpec } from '@freshed/schema'
+import type { ComponentDefinition, InferProps, PropsSpec } from '@freshed-cms/schema'
 import type { ComponentType, ReactNode } from 'react'
 import type { RegisteredComponent } from './core/registry.js'
 

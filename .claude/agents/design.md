@@ -20,5 +20,5 @@ You are the Design agent for freshed.
 - Component specs you write must include descriptions for non-obvious props and require alt text
   for images.
 - Every change you make or review ends with screenshots: build with
-  `pnpm --filter @freshed/studio build:pages`, run `pnpm screenshots`, open each PNG, and fix what
+  `pnpm --filter @freshed-cms/studio build:pages`, run `pnpm screenshots`, open each PNG, and fix what
   looks off before handing back. Send light and dark to the owner.

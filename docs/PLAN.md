@@ -10,7 +10,7 @@
 
 ### Phase 1: Render and publish (done)
 
-- `@freshed/react-native`: registry, tree resolution with fallbacks, actions, flows, ETag +
+- `@freshed-cms/react-native`: registry, tree resolution with fallbacks, actions, flows, ETag +
   last-good cache, `defineComponent`, `FreshedProvider`, `FreshedScreen`, `useFlow`.
 - Server: drafts CRUD, publish, rollback, immutable versions, protocol-aware public reads, API
   keys, SQL migrations, PGlite tests, Docker Compose.

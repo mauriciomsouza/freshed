@@ -1,5 +1,5 @@
-import { brewWorkspace, recordedInvalidPlan, recordedPlan } from '@freshed/example-brew'
-import { checkWorkspace } from '@freshed/schema'
+import { brewWorkspace, recordedInvalidPlan, recordedPlan } from '@freshed-cms/example-brew'
+import { checkWorkspace } from '@freshed-cms/schema'
 import { describe, expect, it, vi } from 'vitest'
 import {
   anthropicProvider,

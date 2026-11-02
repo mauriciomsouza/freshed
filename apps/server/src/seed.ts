@@ -1,4 +1,4 @@
-import { brewComponents, brewFlows, brewScreens, seedHistory } from '@freshed/example-brew'
+import { brewComponents, brewFlows, brewScreens, seedHistory } from '@freshed-cms/example-brew'
 import type { Db } from './db.js'
 import { createStore } from './store.js'
 

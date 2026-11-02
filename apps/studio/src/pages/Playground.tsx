@@ -1,4 +1,4 @@
-import { validateScreen, type Screen } from '@freshed/schema'
+import { validateScreen, type Screen } from '@freshed-cms/schema'
 import { useMemo, useRef, useState } from 'react'
 import { useStore } from '../data/store'
 import { usePreviewLog } from '../preview/Phone'

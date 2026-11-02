@@ -1,4 +1,4 @@
-import type { ComponentDefinition, Flow, Screen } from '@freshed/schema'
+import type { ComponentDefinition, Flow, Screen } from '@freshed-cms/schema'
 import type { GenerationPlan } from './plan.js'
 
 /**

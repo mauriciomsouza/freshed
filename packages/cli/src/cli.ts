@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { providerFromEnv } from '@freshed/ai'
+import { providerFromEnv } from '@freshed-cms/ai'
 import { execFileSync } from 'node:child_process'
 import { parseArgs } from 'node:util'
 import { CliError, runAiCommand } from './ai-command.js'

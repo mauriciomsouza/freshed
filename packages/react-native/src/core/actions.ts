@@ -1,4 +1,4 @@
-import type { Action, ActionType } from '@freshed/schema'
+import type { Action, ActionType } from '@freshed-cms/schema'
 
 export type ActionContext = {
   /** Slug of the screen the action came from. */

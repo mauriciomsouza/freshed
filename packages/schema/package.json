@@ -1,5 +1,5 @@
 {
-  "name": "@freshed/schema",
+  "name": "@freshed-cms/schema",
   "version": "0.1.0",
   "description": "Zod schemas, types and validation for the freshed server-driven UI protocol.",
   "license": "MIT",

@@ -7,7 +7,7 @@ import type {
   Version,
   VersionSummary,
   Workspace,
-} from '@freshed/schema'
+} from '@freshed-cms/schema'
 
 export type PublishResult =
   | { ok: true; version: VersionSummary; created: boolean }

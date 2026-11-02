@@ -1,5 +1,5 @@
 {
-  "name": "@freshed/server",
+  "name": "@freshed-cms/server",
   "version": "0.1.0",
   "private": true,
   "description": "freshed server: drafts, immutable published versions and the public read API, on Postgres.",
@@ -14,9 +14,9 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@freshed/ai": "workspace:*",
-    "@freshed/example-brew": "workspace:*",
-    "@freshed/schema": "workspace:*",
+    "@freshed-cms/ai": "workspace:*",
+    "@freshed-cms/example-brew": "workspace:*",
+    "@freshed-cms/schema": "workspace:*",
     "@hono/node-server": "2.1.5",
     "hono": "4.13.16",
     "pg": "8.23.1",

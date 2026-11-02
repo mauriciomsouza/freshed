@@ -1,5 +1,5 @@
-import * as specs from '@freshed/example-brew'
-import { defineComponent } from '@freshed/react-native'
+import * as specs from '@freshed-cms/example-brew'
+import { defineComponent } from '@freshed-cms/react-native'
 import { Image as RNImage, Pressable, Text as RNText, View, StyleSheet } from 'react-native'
 import { Illustration } from '../illustrations'
 import { color, radius, space, tones, type } from '../theme'

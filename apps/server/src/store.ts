@@ -11,7 +11,7 @@ import {
   type Version,
   type VersionSummary,
   type Workspace,
-} from '@freshed/schema'
+} from '@freshed-cms/schema'
 import type { Db } from './db.js'
 
 type VersionRow = {

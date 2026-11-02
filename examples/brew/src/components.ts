@@ -1,4 +1,4 @@
-import { componentSpec, prop, type ComponentDefinition } from '@freshed/schema'
+import { componentSpec, prop, type ComponentDefinition } from '@freshed-cms/schema'
 
 /**
  * Component specs for the fictional Brew app. These are plain data: the

@@ -1,4 +1,4 @@
-import type { ScreenNode } from '@freshed/schema'
+import type { ScreenNode } from '@freshed-cms/schema'
 
 /** Path-addressed immutable tree edits used by the screen editor. */
 export type Path = number[]

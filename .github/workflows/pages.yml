@@ -28,7 +28,7 @@ jobs:
       - uses: actions/configure-pages@v5
       # Demo mode is forced in the "pages" build: seeded Brew data, no server, no keys.
       - name: Build Studio (demo mode, base /freshed/)
-        run: pnpm --filter @freshed/studio build:pages
+        run: pnpm --filter @freshed-cms/studio build:pages
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/studio/dist-pages

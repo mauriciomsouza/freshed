@@ -1,4 +1,4 @@
-import { checkWorkspace, unreachableScreens, validateScreen } from '@freshed/schema'
+import { checkWorkspace, unreachableScreens, validateScreen } from '@freshed-cms/schema'
 import { describe, expect, it } from 'vitest'
 import { brewComponents, brewWorkspace, onboarding, seedHistory } from '../src/index.js'
 

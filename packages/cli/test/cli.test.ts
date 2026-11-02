@@ -1,5 +1,5 @@
-import { mockProvider, type AdminClient } from '@freshed/ai'
-import { brewWorkspace, recordedPlan } from '@freshed/example-brew'
+import { mockProvider, type AdminClient } from '@freshed-cms/ai'
+import { brewWorkspace, recordedPlan } from '@freshed-cms/example-brew'
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'

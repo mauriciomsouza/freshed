@@ -1,4 +1,4 @@
-import { ComponentDefinition, EventName, FLOW_END, Screen, Slug } from '@freshed/schema'
+import { ComponentDefinition, EventName, FLOW_END, Screen, Slug } from '@freshed-cms/schema'
 import { z } from 'zod'
 
 /**

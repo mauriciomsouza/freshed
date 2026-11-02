@@ -1,5 +1,5 @@
 {
-  "name": "@freshed/ai",
+  "name": "@freshed-cms/ai",
   "version": "0.1.0",
   "description": "freshed ai: turn one prompt into draft screens, flow edges and the app components they need. Bring your own LLM key.",
   "license": "MIT",
@@ -25,11 +25,11 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@freshed/schema": "workspace:*",
+    "@freshed-cms/schema": "workspace:*",
     "zod": "4.6.7"
   },
   "devDependencies": {
     "tsup": "9.0.0",
-    "@freshed/example-brew": "workspace:*"
+    "@freshed-cms/example-brew": "workspace:*"
   }
 }

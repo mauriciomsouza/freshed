@@ -6,7 +6,7 @@ import {
   ScreenRenderer,
   useFlow,
   type ActionHandlers,
-} from '@freshed/react-native'
+} from '@freshed-cms/react-native'
 import * as Clipboard from 'expo-clipboard'
 import { StatusBar } from 'expo-status-bar'
 import { useMemo, useState } from 'react'

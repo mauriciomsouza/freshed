@@ -4,7 +4,7 @@ import {
   type Action,
   type PropSpec,
   type PropValue,
-} from '@freshed/schema'
+} from '@freshed-cms/schema'
 import { useId } from 'react'
 
 /** One editor control per prop type. Values are validated against the spec as you type. */

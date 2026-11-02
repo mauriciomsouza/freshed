@@ -1,4 +1,4 @@
-import { brewComponents, brewFlows, brewScreens, seedHistory } from '@freshed/example-brew'
+import { brewComponents, brewFlows, brewScreens, seedHistory } from '@freshed-cms/example-brew'
 import {
   checkWorkspace,
   diffSnapshots,
@@ -8,7 +8,7 @@ import {
   type Version,
   type VersionSummary,
   type Workspace,
-} from '@freshed/schema'
+} from '@freshed-cms/schema'
 import { safeStorage, type Backend } from './backend'
 
 /**

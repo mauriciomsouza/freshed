@@ -63,7 +63,7 @@ If code and docs disagree, the code plus its tests win, and the doc gets fixed i
 - **Small commits.** One logical change per commit, conventional commit messages
   (`feat(server): ...`, `fix(studio): ...`, `docs: ...`).
 - **Every UI change produces screenshots sent to the owner.** Run
-  `pnpm --filter @freshed/studio build:pages && pnpm screenshots`, look at every PNG, and attach
+  `pnpm --filter @freshed-cms/studio build:pages && pnpm screenshots`, look at every PNG, and attach
   them to the change. Light and dark for anything visual.
 - **Verify the demo.** `node scripts/verify-pages.mjs` must pass before a Studio change merges.
 - **Keep the core pure.** Renderer logic lives in `packages/react-native/src/core` and stays free of
@@ -78,6 +78,6 @@ pnpm install
 pnpm dev                     # Studio on http://localhost:5173 (demo mode)
 pnpm dev:server              # API on http://localhost:8787 (embedded PGlite)
 pnpm test                    # all packages
-pnpm --filter @freshed/studio build:pages && node scripts/verify-pages.mjs
+pnpm --filter @freshed-cms/studio build:pages && node scripts/verify-pages.mjs
 pnpm screenshots             # refresh docs/design/screens
 ```

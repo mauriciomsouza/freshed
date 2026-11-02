@@ -8,7 +8,7 @@ COPY packages/schema/package.json packages/schema/
 COPY packages/ai/package.json packages/ai/
 COPY examples/brew/package.json examples/brew/
 COPY apps/server/package.json apps/server/
-RUN pnpm install --frozen-lockfile --filter @freshed/server... --prod=false
+RUN pnpm install --frozen-lockfile --filter @freshed-cms/server... --prod=false
 COPY tsconfig.base.json ./
 COPY packages/schema packages/schema
 COPY packages/ai packages/ai

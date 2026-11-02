@@ -1,4 +1,4 @@
-import type { Action, Flow, Screen } from '@freshed/schema'
+import type { Action, Flow, Screen } from '@freshed-cms/schema'
 import {
   createContext,
   useCallback,

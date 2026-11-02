@@ -1,5 +1,5 @@
 // Captures Studio screenshots for docs/design/screens with Playwright.
-// Usage: pnpm --filter @freshed/studio build:pages && node scripts/screenshots.mjs
+// Usage: pnpm --filter @freshed-cms/studio build:pages && node scripts/screenshots.mjs
 // Serves apps/studio/dist-pages under /freshed/ exactly like GitHub Pages.
 import { createServer } from 'node:http'
 import { readFile, mkdir } from 'node:fs/promises'

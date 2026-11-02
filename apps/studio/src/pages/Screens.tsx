@@ -3,7 +3,7 @@ import {
   type ComponentDefinition,
   type Screen,
   type ScreenNode,
-} from '@freshed/schema'
+} from '@freshed-cms/schema'
 import { useEffect, useMemo, useState } from 'react'
 import { useStore } from '../data/store'
 import { PhoneFrame, ScreenPreview, usePreviewLog } from '../preview/Phone'

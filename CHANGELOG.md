@@ -10,9 +10,9 @@ All notable changes to this project are documented here. The format follows
 
 ### Added
 
-- `@freshed/schema`: components, screens, actions, flows and versions as zod schemas; validation
+- `@freshed-cms/schema`: components, screens, actions, flows and versions as zod schemas; validation
   against a registry; protocol versioning (protocol 1); stable hashing and snapshot diffs.
-- `@freshed/react-native`: `FreshedProvider`, `FreshedScreen`, `FreshedFlow`, `useFlow`,
+- `@freshed-cms/react-native`: `FreshedProvider`, `FreshedScreen`, `FreshedFlow`, `useFlow`,
   `defineComponent` with props inferred from the spec, fallbacks for unknown components and
   invalid props, ETag revalidation and a last-good cache.
 - Server: drafts CRUD, publish, rollback, immutable versions (enforced by a database trigger),

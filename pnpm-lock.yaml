@@ -41,13 +41,13 @@ importers:
 
   apps/server:
     dependencies:
-      '@freshed/ai':
+      '@freshed-cms/ai':
         specifier: workspace:*
         version: link:../../packages/ai
-      '@freshed/example-brew':
+      '@freshed-cms/example-brew':
         specifier: workspace:*
         version: link:../../examples/brew
-      '@freshed/schema':
+      '@freshed-cms/schema':
         specifier: workspace:*
         version: link:../../packages/schema
       '@hono/node-server':
@@ -84,19 +84,19 @@ importers:
       '@fontsource-variable/onest':
         specifier: 5.3.1
         version: 5.3.1
-      '@freshed/ai':
+      '@freshed-cms/ai':
         specifier: workspace:*
         version: link:../../packages/ai
-      '@freshed/example-brew':
+      '@freshed-cms/example-brew':
         specifier: workspace:*
         version: link:../../examples/brew
-      '@freshed/example-expo-app':
+      '@freshed-cms/example-expo-app':
         specifier: workspace:*
         version: link:../../examples/expo-app
-      '@freshed/react-native':
+      '@freshed-cms/react-native':
         specifier: workspace:*
         version: link:../../packages/react-native
-      '@freshed/schema':
+      '@freshed-cms/schema':
         specifier: workspace:*
         version: link:../../packages/schema
       react:
@@ -127,16 +127,16 @@ importers:
 
   examples/brew:
     dependencies:
-      '@freshed/schema':
+      '@freshed-cms/schema':
         specifier: workspace:*
         version: link:../../packages/schema
 
   examples/expo-app:
     dependencies:
-      '@freshed/example-brew':
+      '@freshed-cms/example-brew':
         specifier: workspace:*
         version: link:../brew
-      '@freshed/react-native':
+      '@freshed-cms/react-native':
         specifier: workspace:*
         version: link:../../packages/react-native
       '@react-native-async-storage/async-storage':
@@ -164,14 +164,14 @@ importers:
 
   packages/ai:
     dependencies:
-      '@freshed/schema':
+      '@freshed-cms/schema':
         specifier: workspace:*
         version: link:../schema
       zod:
         specifier: 4.6.7
         version: 4.6.7
     devDependencies:
-      '@freshed/example-brew':
+      '@freshed-cms/example-brew':
         specifier: workspace:*
         version: link:../../examples/brew
       tsup:
@@ -180,17 +180,17 @@ importers:
 
   packages/cli:
     dependencies:
-      '@freshed/ai':
+      '@freshed-cms/ai':
         specifier: workspace:*
         version: link:../ai
-      '@freshed/schema':
+      '@freshed-cms/schema':
         specifier: workspace:*
         version: link:../schema
       zod:
         specifier: 4.6.7
         version: 4.6.7
     devDependencies:
-      '@freshed/example-brew':
+      '@freshed-cms/example-brew':
         specifier: workspace:*
         version: link:../../examples/brew
       tsup:
@@ -202,14 +202,14 @@ importers:
 
   packages/react-native:
     dependencies:
-      '@freshed/schema':
+      '@freshed-cms/schema':
         specifier: workspace:*
         version: link:../schema
       zod:
         specifier: 4.6.7
         version: 4.6.7
     devDependencies:
-      '@freshed/example-brew':
+      '@freshed-cms/example-brew':
         specifier: workspace:*
         version: link:../../examples/brew
       '@types/react':

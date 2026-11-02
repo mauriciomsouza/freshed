@@ -1,5 +1,5 @@
 // Verifies the GitHub Pages build of the Studio, served under /freshed/ like Pages does.
-// Usage: pnpm --filter @freshed/studio build:pages && node scripts/verify-pages.mjs
+// Usage: pnpm --filter @freshed-cms/studio build:pages && node scripts/verify-pages.mjs
 import assert from 'node:assert/strict'
 import { chromium } from 'playwright-core'
 import { serve } from './screenshots.mjs'

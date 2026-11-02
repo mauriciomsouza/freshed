@@ -1,4 +1,4 @@
-import type { ScopedIssue, SnapshotDiff } from '@freshed/schema'
+import type { ScopedIssue, SnapshotDiff } from '@freshed-cms/schema'
 import { useState } from 'react'
 import { useStore } from '../data/store'
 import { IconPublish, IconRestart } from '../ui/icons'

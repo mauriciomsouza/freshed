@@ -1,5 +1,5 @@
-import { onboarding, brewWorkspace } from '@freshed/example-brew'
-import { prop, type Action, type ScreenNode } from '@freshed/schema'
+import { onboarding, brewWorkspace } from '@freshed-cms/example-brew'
+import { prop, type Action, type ScreenNode } from '@freshed-cms/schema'
 import { describe, expect, it, vi } from 'vitest'
 import {
   createClient,

@@ -3,8 +3,8 @@ import {
   transition,
   type ActionHandlers,
   type FlowState,
-} from '@freshed/react-native'
-import { FLOW_END, validateFlow, type Flow, type Screen } from '@freshed/schema'
+} from '@freshed-cms/react-native'
+import { FLOW_END, validateFlow, type Flow, type Screen } from '@freshed-cms/schema'
 import { useMemo, useRef, useState } from 'react'
 import { useStore } from '../data/store'
 import { usePreviewLog } from '../preview/Phone'

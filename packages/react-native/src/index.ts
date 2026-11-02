@@ -15,5 +15,5 @@ export {
   type ScreenRendererProps,
   type UseFlowResult,
 } from './react.js'
-export { prop, PROTOCOL_VERSION } from '@freshed/schema'
-export type { Action, ComponentDefinition, Flow, Screen, ScreenNode } from '@freshed/schema'
+export { prop, PROTOCOL_VERSION } from '@freshed-cms/schema'
+export type { Action, ComponentDefinition, Flow, Screen, ScreenNode } from '@freshed-cms/schema'

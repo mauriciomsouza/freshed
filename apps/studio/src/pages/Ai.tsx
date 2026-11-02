@@ -7,9 +7,9 @@ import {
   patchRegistry,
   type GenerateResult,
   type ProviderId,
-} from '@freshed/ai'
-import { recordedPlan, recordedPrompt } from '@freshed/example-brew'
-import { FLOW_END, type Screen } from '@freshed/schema'
+} from '@freshed-cms/ai'
+import { recordedPlan, recordedPrompt } from '@freshed-cms/example-brew'
+import { FLOW_END, type Screen } from '@freshed-cms/schema'
 import { useMemo, useState } from 'react'
 import { safeStorage } from '../data/backend'
 import { useStore } from '../data/store'
@@ -26,7 +26,7 @@ import { IconShield, IconSpark } from '../ui/icons'
 const session = safeStorage('session')
 const KEY_STORAGE = 'freshed:ai:key'
 
-const REGISTRY_SOURCE = `import { createRegistry } from '@freshed/react-native'
+const REGISTRY_SOURCE = `import { createRegistry } from '@freshed-cms/react-native'
 import { Button, Card, Hero, Image, List, Spacer, Stack, Text } from './components'
 // freshed:imports
 

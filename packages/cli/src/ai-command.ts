@@ -8,8 +8,8 @@ import {
   type AdminClient,
   type GenerationPlan,
   type Provider,
-} from '@freshed/ai'
-import type { Workspace } from '@freshed/schema'
+} from '@freshed-cms/ai'
+import type { Workspace } from '@freshed-cms/schema'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join, relative, resolve } from 'node:path'
 import { branchExists, currentBranch, defaultBranch, git, isClean, isGitRepo } from './git.js'
@@ -123,7 +123,7 @@ export async function runAiCommand(options: AiCommandOptions): Promise<AiCommand
   const files = plan.newComponents.map((c) =>
     componentFile(c, {
       componentsDir: config.componentsDir,
-      rendererImport: '@freshed/react-native',
+      rendererImport: '@freshed-cms/react-native',
     }),
   )
   const registryPath = join(appDir, config.registry)

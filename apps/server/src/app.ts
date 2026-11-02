@@ -1,4 +1,4 @@
-import { generatePlan, type Provider } from '@freshed/ai'
+import { generatePlan, type Provider } from '@freshed-cms/ai'
 import {
   ComponentDefinition,
   diffSnapshots,
@@ -10,7 +10,7 @@ import {
   validateFlow,
   validateScreen,
   type Version,
-} from '@freshed/schema'
+} from '@freshed-cms/schema'
 import { Hono, type Context, type MiddlewareHandler } from 'hono'
 import { cors } from 'hono/cors'
 import { z } from 'zod'

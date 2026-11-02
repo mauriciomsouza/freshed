@@ -2,7 +2,7 @@ export * from './ai-recording.js'
 export * from './components.js'
 export * from './content.js'
 
-import type { Workspace } from '@freshed/schema'
+import type { Workspace } from '@freshed-cms/schema'
 import { brewComponents } from './components.js'
 import { brewFlows, brewScreens } from './content.js'
 

@@ -20,7 +20,7 @@ How you work:
   `freshed/ai-*` branch and never imported or executed. Never log or persist user LLM keys.
 - Commits are small and conventional (`feat(schema): ...`). Run
   `pnpm typecheck && pnpm lint && pnpm test` before handing off. For Studio changes also run
-  `pnpm --filter @freshed/studio build:pages && node scripts/verify-pages.mjs` and capture
+  `pnpm --filter @freshed-cms/studio build:pages && node scripts/verify-pages.mjs` and capture
   screenshots.
 - You do not approve your own work. Hand off to QA with: what changed, how to verify, and what you
   were unsure about.

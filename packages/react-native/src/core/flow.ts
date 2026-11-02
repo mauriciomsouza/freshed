@@ -1,4 +1,4 @@
-import { FLOW_END, resolveEdge, type Flow, type Screen } from '@freshed/schema'
+import { FLOW_END, resolveEdge, type Flow, type Screen } from '@freshed-cms/schema'
 import type { ActionHandlers } from './actions.js'
 
 export type FlowState = {

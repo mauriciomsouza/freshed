@@ -1,4 +1,4 @@
-import { componentsUsed, type ComponentDefinition, type PropSpec } from '@freshed/schema'
+import { componentsUsed, type ComponentDefinition, type PropSpec } from '@freshed-cms/schema'
 import { useStore } from '../data/store'
 import { registeredNames, ScreenPreview } from '../preview/Phone'
 import type { Route } from '../router'

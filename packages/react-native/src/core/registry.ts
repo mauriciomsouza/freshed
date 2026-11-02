@@ -1,4 +1,4 @@
-import { ComponentDefinition, type InferProps, type PropsSpec } from '@freshed/schema'
+import { ComponentDefinition, type InferProps, type PropsSpec } from '@freshed-cms/schema'
 
 /**
  * A component the app ships, paired with its CMS-facing definition.

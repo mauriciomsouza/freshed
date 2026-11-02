@@ -1,4 +1,10 @@
-import { Action, checkPropValue, MAX_DEPTH, type PropValue, type ScreenNode } from '@freshed/schema'
+import {
+  Action,
+  checkPropValue,
+  MAX_DEPTH,
+  type PropValue,
+  type ScreenNode,
+} from '@freshed-cms/schema'
 import type { Registry } from './registry.js'
 
 export type ResolvedComponent<R> = {

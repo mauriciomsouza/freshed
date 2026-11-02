@@ -1,4 +1,4 @@
-import type { Flow, Screen } from '@freshed/schema'
+import type { Flow, Screen } from '@freshed-cms/schema'
 
 /**
  * Seed content for the fictional Brew app. Images reference `asset:` names
