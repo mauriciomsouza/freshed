@@ -21,6 +21,6 @@ All notable changes to this project are documented here. The format follows
   playground, publish and version history with rollback, light and dark themes.
 - Demo mode and GitHub Pages deployment of the Studio.
 - freshed ai: provider-agnostic generation (Anthropic, OpenAI-compatible) constrained by the
-  schema with one repair turn; Studio panel with bring-your-own key; `npx freshed ai` CLI that
+  schema with one repair turn; Studio panel with bring-your-own key; `npx @freshed-cms/cli ai` CLI that
   writes components on a review branch and syncs drafts; `POST /v1/ai/generate`.
 - Brew example: fictional coffee subscription app with an onboarding flow and a promo screen.

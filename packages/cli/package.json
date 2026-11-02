@@ -1,5 +1,5 @@
 {
-  "name": "freshed",
+  "name": "@freshed-cms/cli",
   "version": "0.1.0",
   "description": "freshed CLI: generate draft screens and app components from one prompt with your own LLM key.",
   "license": "MIT",

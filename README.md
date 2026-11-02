@@ -137,7 +137,7 @@ together. Bring your own key (Anthropic first-class, any OpenAI-compatible API w
 
 ```bash
 export FRESHED_AI_KEY=sk-ant-...
-npx freshed ai "Add a referral screen after onboarding with a code to copy and a share button" \
+npx @freshed-cms/cli ai "Add a referral screen after onboarding with a code to copy and a share button" \
   --app ./ --server https://cms.example.com
 ```
 
@@ -168,7 +168,7 @@ packages/
   schema/          zod schemas, validation, protocol versioning (@freshed-cms/schema)
   react-native/    renderer: pure core + React bindings (@freshed-cms/react-native)
   ai/              freshed ai: providers, generation, codegen, sync (@freshed-cms/ai)
-  cli/             npx freshed ai (freshed)
+  cli/             npx @freshed-cms/cli ai (bin: freshed)
 apps/
   server/          Hono + Postgres API, SQL migrations, PGlite tests
   studio/          React + Vite CMS UI, demo mode for GitHub Pages

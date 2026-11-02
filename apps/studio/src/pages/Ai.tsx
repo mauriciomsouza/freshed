@@ -343,7 +343,8 @@ export function AiPage({ navigate }: { navigate: (r: Route) => void }) {
                     <h4>App code, on branch freshed/ai-{result.plan.slug}</h4>
                     <p className="field-hint" style={{ margin: '-4px 0 8px' }}>
                       The CLI writes these files for review:{' '}
-                      <code>npx freshed ai "…" --app ./</code>. freshed never runs generated code.
+                      <code>npx @freshed-cms/cli ai "…" --app ./</code>. freshed never runs
+                      generated code.
                     </p>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                       {files.map((f) => (

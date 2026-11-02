@@ -90,7 +90,7 @@ Constraining the shape is not enough, so every answer is checked:
 ```bash
 export FRESHED_AI_KEY=sk-ant-...          # your key
 export FRESHED_ADMIN_KEY=fr_admin_...     # to sync drafts
-npx freshed ai "Add a referral screen after checkout with a code to copy and a share button" \
+npx @freshed-cms/cli ai "Add a referral screen after checkout with a code to copy and a share button" \
   --app ./ --server https://cms.example.com [--pr] [--dry-run]
 ```
 
