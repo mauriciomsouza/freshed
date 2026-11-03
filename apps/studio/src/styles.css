@@ -870,14 +870,14 @@ pre,
 }
 .layers-parent {
   font-weight: 450;
-  color: var(--text-3);
+  color: var(--text-2);
 }
 .layers-note {
   margin: var(--space-2) var(--space-2) 0;
   padding: 6px 10px;
   border-radius: var(--radius-sm);
-  background: var(--draft-soft);
-  color: var(--draft);
+  background: var(--sunken);
+  color: var(--text-2);
   font-size: var(--text-xs);
 }
 .layers .tree {
@@ -944,7 +944,7 @@ pre,
 }
 .palette-head {
   font-size: var(--text-xs);
-  color: var(--text-3);
+  color: var(--text-2);
   margin-bottom: 8px;
 }
 .palette-items {
@@ -1075,7 +1075,7 @@ pre,
 }
 .device-meta {
   font-size: var(--text-xs);
-  color: var(--text-3);
+  color: var(--text-2);
 }
 .device-meta .spacer {
   flex: 1;
