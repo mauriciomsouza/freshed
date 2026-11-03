@@ -109,6 +109,24 @@ try {
     await page.locator('.phone-body').getByText('I already have an account').waitFor()
   })
 
+  await check('palette: adding every component keeps the preview rendered', async () => {
+    await page.goto(`${BASE}?fresh#/screens/welcome`)
+    const chips = page.locator('.palette .chip')
+    const rows = page.getByRole('treeitem')
+    const count = await chips.count()
+    assert.ok(count >= 8, `expected the Brew components in the palette, got ${count}`)
+    for (let i = 0; i < count; i++) {
+      const name = await chips.nth(i).evaluate((e) => e.lastChild.textContent)
+      const before = await rows.count()
+      await chips.nth(i).click()
+      assert.equal(await rows.count(), before + 1, `${name} was not added`)
+      await page.waitForTimeout(100)
+      assert.deepEqual(errors, [], `page errors after adding ${name}`)
+      assert.equal(await page.locator('.phone-error').count(), 0, `${name} broke the preview`)
+      await page.locator('.phone-body').getByText('Fresh beans').waitFor()
+    }
+  })
+
   await check('device bar sets resolution, aspect ratio, orientation and safe area', async () => {
     await page.goto(`${BASE}?fresh#/screens/welcome`)
     const frame = page.getByRole('region', { name: 'Preview of Welcome' })
