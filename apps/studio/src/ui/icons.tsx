@@ -73,6 +73,28 @@ export const IconDown = (p: P) => (
     <path d="M4 6l4 4 4-4" />
   </svg>
 )
+export const IconIndent = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M7 3.5h6.5M7 8h6.5M7 12.5h6.5M2.5 5.5 5 8l-2.5 2.5" />
+  </svg>
+)
+export const IconOutdent = (p: P) => (
+  <svg {...base} {...p}>
+    <path d="M7 3.5h6.5M7 8h6.5M7 12.5h6.5M5 5.5 2.5 8 5 10.5" />
+  </svg>
+)
+export const IconRotate = (p: P) => (
+  <svg {...base} {...p}>
+    <rect x="2" y="6" width="9" height="7.5" rx="1.5" />
+    <path d="M7.5 2.25h2.25a3 3 0 0 1 3 3v1.5M11.25 5.25l1.5 1.5 1.5-1.5" />
+  </svg>
+)
+export const IconSafeArea = (p: P) => (
+  <svg {...base} {...p}>
+    <rect x="3.25" y="1.75" width="9.5" height="12.5" rx="2" />
+    <path d="M5.5 4.5h5v7h-5z" strokeDasharray="1.5 1.5" />
+  </svg>
+)
 export const IconRestart = (p: P) => (
   <svg {...base} {...p}>
     <path d="M2.75 8a5.25 5.25 0 1 0 1.6-3.77M2.5 2.5v2.75h2.75" />

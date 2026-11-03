@@ -6,21 +6,12 @@ import {
 } from '@freshed-cms/schema'
 import { useEffect, useMemo, useState } from 'react'
 import { useStore } from '../data/store'
-import { PhoneFrame, ScreenPreview, usePreviewLog } from '../preview/Phone'
+import { DevicePreview } from '../preview/Device'
+import { ScreenPreview, usePreviewLog } from '../preview/Phone'
 import type { Route } from '../router'
-import { IconDown, IconPlus, IconTrash, IconUp } from '../ui/icons'
+import { LayerTree } from '../ui/LayerTree'
 import { PropField } from '../ui/PropField'
-import {
-  flattenTree,
-  getAt,
-  insertChild,
-  moveAt,
-  removeAt,
-  samePath,
-  summarize,
-  updateAt,
-  type Path,
-} from '../ui/tree'
+import { getAt, updateAt, type Path } from '../ui/tree'
 
 export function ScreensPage({ slug, navigate }: { slug?: string; navigate: (r: Route) => void }) {
   const { workspace, status } = useStore()
@@ -149,43 +140,28 @@ function ScreenEditor({ screen }: { screen: Screen }) {
         </div>
         {mode === 'tree' ? (
           <div className="editor-split">
-            <TreeView
+            <LayerTree
               root={draft.root}
               selected={selected}
               onSelect={setSelected}
               registry={registry}
+              components={workspace.components}
+              onChange={(root, path, note) => {
+                setRoot(root)
+                setSelected(path)
+                if (note) toast(note)
+              }}
             />
             <div className="inspector">
               {node && selected ? (
                 <Inspector
                   node={node}
                   def={def}
-                  path={selected}
                   screens={screenSlugs}
-                  components={workspace.components}
                   onChange={(n) => setRoot(updateAt(draft.root, selected, () => n))}
-                  onRemove={() => {
-                    setRoot(removeAt(draft.root, selected))
-                    setSelected(selected.slice(0, -1))
-                    toast(`Removed ${node.type}`)
-                  }}
-                  onMove={(delta) => {
-                    const r = moveAt(draft.root, selected, delta)
-                    setRoot(r.root)
-                    setSelected(r.path)
-                  }}
-                  onAdd={(type) => {
-                    const r = insertChild(draft.root, selected, {
-                      id: `${type.toLowerCase()}-${Date.now().toString(36).slice(-4)}`,
-                      type,
-                      props: {},
-                    })
-                    setRoot(r.root)
-                    setSelected(r.path)
-                  }}
                 />
               ) : (
-                <div className="empty">Select a node to edit its props.</div>
+                <div className="empty">Select a layer to edit its props.</div>
               )}
               {errors.length ? (
                 <ul className="issues" aria-label="Validation issues">
@@ -213,100 +189,22 @@ function ScreenEditor({ screen }: { screen: Screen }) {
   )
 }
 
-function TreeView({
-  root,
-  selected,
-  onSelect,
-  registry,
-}: {
-  root: ScreenNode
-  selected: Path | null
-  onSelect: (p: Path) => void
-  registry: Map<string, ComponentDefinition>
-}) {
-  const rows = flattenTree(root)
-  return (
-    <ul className="tree" role="tree" aria-label="Component tree">
-      {rows.map(({ node, path, depth }) => {
-        const known = registry.has(node.type)
-        return (
-          <li key={path.join('.') || 'root'} role="none">
-            <button
-              role="treeitem"
-              aria-selected={samePath(selected, path)}
-              aria-level={depth + 1}
-              className={`tree-row${known ? '' : ' tree-unknown'}`}
-              style={{ paddingLeft: 8 + depth * 16 }}
-              onClick={() => onSelect(path)}
-            >
-              {Array.from({ length: depth }).map((_, i) => (
-                <span key={i} className="tree-guide" style={{ left: 15 + i * 16 }} aria-hidden />
-              ))}
-              <span className="tree-glyph" aria-hidden>
-                {node.type[0]}
-              </span>
-              <span className="tree-type">{node.type}</span>
-              <span className="tree-summary">{summarize(node)}</span>
-            </button>
-          </li>
-        )
-      })}
-    </ul>
-  )
-}
-
 function Inspector({
   node,
   def,
-  path,
   screens,
-  components,
   onChange,
-  onRemove,
-  onMove,
-  onAdd,
 }: {
   node: ScreenNode
   def: ComponentDefinition | undefined
-  path: Path
   screens: string[]
-  components: ComponentDefinition[]
   onChange: (n: ScreenNode) => void
-  onRemove: () => void
-  onMove: (d: -1 | 1) => void
-  onAdd: (type: string) => void
 }) {
-  const isRoot = path.length === 0
   return (
     <>
       <div className="inspector-head">
         <h2 className="inspector-title">{node.type}</h2>
         {node.id ? <code className="crumb">#{node.id}</code> : null}
-        {!isRoot ? (
-          <div className="inspector-actions">
-            <button
-              className="btn btn-ghost icon-btn"
-              aria-label="Move up"
-              onClick={() => onMove(-1)}
-            >
-              <IconUp />
-            </button>
-            <button
-              className="btn btn-ghost icon-btn"
-              aria-label="Move down"
-              onClick={() => onMove(1)}
-            >
-              <IconDown />
-            </button>
-            <button
-              className="btn btn-ghost icon-btn btn-danger"
-              aria-label="Remove node"
-              onClick={onRemove}
-            >
-              <IconTrash />
-            </button>
-          </div>
-        ) : null}
       </div>
       {def?.description ? <p className="inspector-desc">{def.description}</p> : null}
       {!def ? (
@@ -330,21 +228,6 @@ function Inspector({
           />
         ))
       )}
-      {def?.children ? (
-        <div className="field">
-          <span className="field-label">Add child</span>
-          <div className="add-menu">
-            {components
-              .filter((c) => c.name !== 'Stack' || path.length < 3)
-              .map((c) => (
-                <button key={c.name} className="btn btn-sm" onClick={() => onAdd(c.name)}>
-                  <IconPlus />
-                  {c.name}
-                </button>
-              ))}
-          </div>
-        </div>
-      ) : null}
     </>
   )
 }
@@ -413,12 +296,9 @@ export function PreviewTable({
           </>
         )}
       </div>
-      <div className="table-stage">
-        <PhoneFrame label={`Preview of ${screen.title}`}>
-          <ScreenPreview screen={screen} handlers={handlers} onAction={onAction} />
-          {overlay}
-        </PhoneFrame>
-      </div>
+      <DevicePreview label={`Preview of ${screen.title}`} overlay={overlay}>
+        <ScreenPreview screen={screen} handlers={handlers} onAction={onAction} />
+      </DevicePreview>
       <div className="log" aria-live="polite">
         <div className="log-head">
           <span>Actions</span>

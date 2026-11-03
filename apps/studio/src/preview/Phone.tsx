@@ -11,15 +11,16 @@ import {
 } from '@freshed-cms/react-native'
 import { components as brewComponents } from '@freshed-cms/example-expo-app/registry'
 import type { ComponentDefinition, Screen } from '@freshed-cms/schema'
-import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { Text, View } from 'react-native'
 import { aiComponents } from './ai-components'
 
 /**
- * The phone frame renders screens with the app's own components and the
- * same renderer package the Expo app uses (react-native aliased to
+ * The preview renders screens with the app's own components and the same
+ * renderer package the Expo app uses (react-native aliased to
  * react-native-web). Components the bundle does not have render the
- * development fallback, exactly as an old build would.
+ * development fallback, exactly as an old build would. The device frame
+ * around it lives in ./Device.tsx.
  */
 
 const registryComponents = [...brewComponents, ...aiComponents]
@@ -66,50 +67,6 @@ export function usePreviewLog() {
   }, [])
   const clear = useCallback(() => setLog([]), [])
   return { log, push, clear }
-}
-
-export function PhoneFrame({ children, label }: { children: ReactNode; label?: string }) {
-  return (
-    <div className="phone" role="region" aria-label={label ?? 'App preview'}>
-      <div className="phone-screen">
-        <div className="phone-island" aria-hidden />
-        <div className="phone-status" aria-hidden>
-          <span>9:41</span>
-          <span style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
-            <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor">
-              <rect x="0" y="7" width="3" height="4" rx="1" />
-              <rect x="4.5" y="5" width="3" height="6" rx="1" />
-              <rect x="9" y="2.5" width="3" height="8.5" rx="1" />
-              <rect x="13.5" y="0" width="3" height="11" rx="1" />
-            </svg>
-            <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
-              <rect
-                x="0.5"
-                y="0.5"
-                width="21"
-                height="11"
-                rx="3.5"
-                stroke="currentColor"
-                opacity="0.4"
-              />
-              <rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor" />
-              <rect
-                x="23"
-                y="4"
-                width="1.5"
-                height="4"
-                rx="0.75"
-                fill="currentColor"
-                opacity="0.4"
-              />
-            </svg>
-          </span>
-        </div>
-        {children}
-        <div className="phone-home" aria-hidden />
-      </div>
-    </div>
-  )
 }
 
 export function ScreenPreview({

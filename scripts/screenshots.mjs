@@ -58,6 +58,20 @@ async function main() {
       theme: 'light',
       clicks: ['Get started', 'Bright & fruity'],
     },
+    {
+      name: 'device-preview',
+      hash: '#/screens/taste',
+      theme: 'light',
+      device: 'android-compact',
+      safeArea: true,
+    },
+    {
+      name: 'device-preview-dark',
+      hash: '#/screens/taste',
+      theme: 'dark',
+      device: 'android-compact',
+      safeArea: true,
+    },
     { name: 'playground', hash: '#/playground', theme: 'light' },
     { name: 'version-history', hash: '#/publish', theme: 'light', edit: true },
     { name: 'components', hash: '#/components/Card', theme: 'light' },
@@ -86,6 +100,10 @@ async function main() {
       await page.goto(`http://localhost:4180${BASE}?fresh${shot.hash}`)
       await page.waitForSelector('.timeline')
     }
+    if (shot.device) {
+      await page.getByLabel('Device', { exact: true }).selectOption(shot.device)
+    }
+    if (shot.safeArea) await page.getByRole('button', { name: 'Safe area' }).click()
     for (const label of shot.clicks ?? []) {
       await page.locator('.phone-body').getByText(label, { exact: true }).click()
       await page.waitForTimeout(150)
