@@ -10,6 +10,7 @@ import {
 import { IconRotate, IconSafeArea } from '../ui/icons'
 import {
   ASPECT_RATIOS,
+  aspectFits,
   DEFAULT_SETTINGS,
   DEVICES,
   fitScale,
@@ -149,6 +150,7 @@ function DeviceBar({
   update: Update
 }) {
   const aspect = matchAspect(device.width, device.height)
+  const short = Math.min(device.width, device.height)
   const landscape = settings.orientation === 'landscape'
   return (
     <div className="device-bar" role="toolbar" aria-label="Preview device">
@@ -186,7 +188,8 @@ function DeviceBar({
           </option>
         )}
         {ASPECT_RATIOS.map((a) => (
-          <option key={a.id} value={a.id}>
+          // Ratios that would make the long side pass the size limit are not offered.
+          <option key={a.id} value={a.id} disabled={!aspectFits(short, a.id)}>
             {a.id}
           </option>
         ))}

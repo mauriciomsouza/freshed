@@ -207,13 +207,26 @@ export function resolveDevice(s: DeviceSettings): ResolvedDevice {
   }
 }
 
-/** Keep the short side, set the long side from a named ratio. */
+const longSide = (short: number, a: (typeof ASPECT_RATIOS)[number]) =>
+  Math.round((short * a.long) / a.short)
+
+/** Whether a named ratio keeps the long side within MAX_SIDE for this short side. */
+export function aspectFits(short: number, id: AspectId): boolean {
+  const a = ASPECT_RATIOS.find((r) => r.id === id)
+  return !!a && longSide(short, a) <= MAX_SIDE
+}
+
+/**
+ * Keep the short side, set the long side from a named ratio. A ratio whose
+ * long side would pass MAX_SIDE is refused (the select disables it).
+ */
 export function withAspect(s: DeviceSettings, id: AspectId): DeviceSettings {
   const a = ASPECT_RATIOS.find((r) => r.id === id)
   if (!a) return s
   const d = resolveDevice(s)
   const short = Math.min(d.width, d.height)
-  return { ...s, custom: { width: short, height: clampSide((short * a.long) / a.short) } }
+  if (!aspectFits(short, id)) return s
+  return { ...s, custom: { width: short, height: clampSide(longSide(short, a)) } }
 }
 
 /**

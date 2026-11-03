@@ -3,6 +3,7 @@ import {
   ASPECT_RATIOS,
   DEFAULT_SETTINGS,
   DEVICES,
+  aspectFits,
   aspectLabel,
   clampSide,
   fitScale,
@@ -66,6 +67,20 @@ describe('resolving settings', () => {
       // Rotating a custom size keeps its ratio.
       expect(resolveDevice({ ...s, orientation: 'landscape' }).aspect).toBe(a.id)
     }
+  })
+
+  it('offers only the ratios whose long side fits the size limit', () => {
+    const fitting = (short: number) =>
+      ASPECT_RATIOS.filter((a) => aspectFits(short, a.id)).map((a) => a.id)
+    // 820 pt short side: 16:9 is 1458 pt long, 18:9 would be 1640 pt.
+    expect(fitting(820)).toEqual(['4:3', '3:2', '16:10', '16:9'])
+    // Exactly the limit is fine: 800 at 18:9 is 1600 pt.
+    expect(aspectFits(800, '18:9')).toBe(true)
+    expect(aspectFits(800, '19.5:9')).toBe(false)
+    expect(fitting(393)).toEqual(ASPECT_RATIOS.map((a) => a.id))
+    // A ratio that does not fit leaves the settings alone instead of clamping.
+    const tablet = { ...DEFAULT_SETTINGS, device: 'ios-tablet' }
+    expect(withAspect(tablet, '21:9')).toBe(tablet)
   })
 
   it('sets the oriented width or height by hand, clamped', () => {
