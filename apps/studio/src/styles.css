@@ -1180,20 +1180,28 @@ pre,
 }
 .safe-band {
   position: absolute;
-  display: grid;
-  place-items: center;
   background: repeating-linear-gradient(
     135deg,
     rgba(51, 70, 211, 0.2) 0 5px,
     rgba(51, 70, 211, 0.07) 5px 10px
   );
 }
+/* Off-centre so the label never covers the island, punch-hole or home bar. */
 .safe-band span {
+  position: absolute;
+  left: 75%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
   font: 600 13px/1.3 var(--font-code);
   color: #ffffff;
   background: #3346d3;
   padding: 1px 6px;
   border-radius: 5px;
+}
+.safe-band-side span {
+  left: 50%;
+  top: 25%;
 }
 .safe-rect {
   position: absolute;

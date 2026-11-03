@@ -415,7 +415,10 @@ function StatusIcons() {
   )
 }
 
-/** Hatched bands over the unsafe edges, each labelled with its inset in points. */
+/**
+ * Hatched bands over the unsafe edges, each labelled with its inset in points.
+ * Labels sit off-centre (CSS) so they never cover the cutout or the home bar.
+ */
 function SafeAreaGuides({ insets }: { insets: Insets }) {
   const { top, right, bottom, left } = insets
   return (
@@ -431,12 +434,12 @@ function SafeAreaGuides({ insets }: { insets: Insets }) {
         </div>
       ) : null}
       {left ? (
-        <div className="safe-band" style={{ top, bottom, left: 0, width: left }}>
+        <div className="safe-band safe-band-side" style={{ top, bottom, left: 0, width: left }}>
           <span>{left}</span>
         </div>
       ) : null}
       {right ? (
-        <div className="safe-band" style={{ top, bottom, right: 0, width: right }}>
+        <div className="safe-band safe-band-side" style={{ top, bottom, right: 0, width: right }}>
           <span>{right}</span>
         </div>
       ) : null}
