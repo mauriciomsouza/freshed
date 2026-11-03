@@ -15,6 +15,14 @@ All notable changes to this project are documented here. The format follows
   them, drag components in from a palette, and change a layer's level with the toolbar or
   Alt+arrow keys. The playground's layers edit its JSON.
 
+### Fixed
+
+- Brew example: a `List` without `items` no longer crashes the screen; it renders nothing, and an
+  `Image` without `src` shows placeholder art.
+- Studio: a component that fails to render now shows a message inside the preview device instead
+  of blanking the whole Studio, and components added from the palette start with placeholder
+  values for their required props.
+
 ## [0.1.0] - 2026-11-01
 
 ### Added
