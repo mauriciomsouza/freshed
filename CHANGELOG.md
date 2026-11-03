@@ -10,18 +10,25 @@ All notable changes to this project are documented here. The format follows
 
 - Studio: device preview with presets for iOS and Android phones and tablets, an aspect ratio
   selector, custom width and height in points, portrait and landscape, Fit or 100% zoom, and
-  safe-area insets with optional guides. Screens lay out at the device's real logical size.
-- Studio: layers panel in the screen editor and the playground. Drag layers to reorder and nest
-  them, drag components in from a palette, and change a layer's level with the toolbar or
-  Alt+arrow keys. The playground's layers edit its JSON.
+  safe-area insets with optional guides. Screens lay out at the device's real logical size. The
+  device you pick applies to every preview and is remembered in your browser.
+- Studio: drag and drop for layers. Drag layers to reorder and nest them and drag components in
+  from a palette; every move also works from the layer toolbar or with Alt+arrow keys.
+- Studio: the playground has a layers panel too; editing its layers rewrites the JSON.
+
+### Changed
+
+- Studio: the screen editor's component tree is now the layers panel. Moving, removing and adding
+  layers happens in its toolbar and palette instead of in the props inspector.
 
 ### Fixed
 
-- Brew example: a `List` without `items` no longer crashes the screen; it renders nothing, and an
+- Studio: a component that fails to render shows a message inside the preview device instead of
+  blanking the whole Studio.
+- Studio: components you add to a screen start with placeholder values for their required props,
+  so they render and validate straight away.
+- Brew example: a `List` without `items` renders nothing instead of crashing the screen, and an
   `Image` without `src` shows placeholder art.
-- Studio: a component that fails to render now shows a message inside the preview device instead
-  of blanking the whole Studio, and components added from the palette start with placeholder
-  values for their required props.
 
 ## [0.1.0] - 2026-11-01
 
