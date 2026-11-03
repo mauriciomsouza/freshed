@@ -67,12 +67,15 @@ export function LayerTree({
   // New layers get placeholders for their required props, so they render straight away.
   const create = (type: string) => newNode(type, registry.get(type))
 
+  const focusRow = (p: Path) =>
+    list.current?.querySelector<HTMLElement>(`[data-path="${p.join('.')}"]`)?.focus()
+
   // Keep keyboard focus on a layer after it moves.
   useEffect(() => {
     const p = focusAfter.current
     if (!p) return
     focusAfter.current = null
-    list.current?.querySelector<HTMLElement>(`[data-path="${p.join('.')}"]`)?.focus()
+    focusRow(p)
   })
 
   const allowed = (drag: Drag, slot: Slot | null): slot is Slot => {
@@ -137,11 +140,20 @@ export function LayerTree({
     const to = sel.at(-1)! + delta
     return to >= 0 && to < siblings
   }
+  type Move = (path: Path, focus?: boolean) => void
+  const moves: Record<'up' | 'down' | 'in' | 'out', Move> = {
+    up: (p, focus = false) => act(moveAt(root, p, -1), focus),
+    down: (p, focus = false) => act(moveAt(root, p, 1), focus),
+    in: (p, focus = false) => act(indent(root, p, accepts), focus),
+    out: (p, focus = false) => act(outdent(root, p), focus),
+  }
+  const arrowMoves: Partial<Record<string, Move>> = {
+    ArrowUp: moves.up,
+    ArrowDown: moves.down,
+    ArrowRight: moves.in,
+    ArrowLeft: moves.out,
+  }
   const actions = {
-    up: (focus = false) => sel && act(moveAt(root, sel, -1), focus),
-    down: (focus = false) => sel && act(moveAt(root, sel, 1), focus),
-    in: (focus = false) => sel && act(indent(root, sel, accepts), focus),
-    out: (focus = false) => sel && act(outdent(root, sel), focus),
     remove: () => {
       if (!sel?.length || !selNode) return
       const index = sel.at(-1)!
@@ -156,33 +168,31 @@ export function LayerTree({
     },
   }
 
+  /**
+   * Up/Down move focus between rows, Enter or Space selects, and Alt+arrows
+   * move the focused layer (selecting it first). Alt+Left/Right never reach
+   * the browser, where they would go back or forward in history.
+   */
   const onRowKey = (e: KeyboardEvent<HTMLElement>, path: Path) => {
-    if (disabled) return
+    if (e.altKey && e.key.startsWith('Arrow')) {
+      e.preventDefault()
+      if (disabled) return
+      const move = arrowMoves[e.key]
+      if (!move) return
+      if (!samePath(sel, path)) onSelect(path)
+      move(path, true)
+      return
+    }
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
       onSelect(path)
       return
     }
-    if (!e.altKey && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
       e.preventDefault()
       const i = rows.findIndex((r) => samePath(path, r.path))
       const next = rows[i + (e.key === 'ArrowDown' ? 1 : -1)]
-      if (next) {
-        focusAfter.current = next.path
-        onSelect(next.path)
-      }
-      return
-    }
-    if (!e.altKey || !samePath(sel, path)) return
-    const map: Record<string, () => void> = {
-      ArrowUp: () => actions.up(true),
-      ArrowDown: () => actions.down(true),
-      ArrowRight: () => actions.in(true),
-      ArrowLeft: () => actions.out(true),
-    }
-    if (map[e.key]) {
-      e.preventDefault()
-      map[e.key]!()
+      if (next) focusRow(next.path)
     }
   }
 
@@ -225,7 +235,7 @@ export function LayerTree({
           aria-keyshortcuts="Alt+ArrowUp"
           title="Move up (Alt+↑)"
           disabled={!!disabled || !canMove(-1)}
-          onClick={() => actions.up()}
+          onClick={() => sel && moves.up(sel)}
         >
           <IconUp />
         </button>
@@ -235,7 +245,7 @@ export function LayerTree({
           aria-keyshortcuts="Alt+ArrowDown"
           title="Move down (Alt+↓)"
           disabled={!!disabled || !canMove(1)}
-          onClick={() => actions.down()}
+          onClick={() => sel && moves.down(sel)}
         >
           <IconDown />
         </button>
@@ -245,7 +255,7 @@ export function LayerTree({
           aria-keyshortcuts="Alt+ArrowLeft"
           title="Move out of its parent, one level up (Alt+←)"
           disabled={!!disabled || !sel || !outdent(root, sel)}
-          onClick={() => actions.out()}
+          onClick={() => sel && moves.out(sel)}
         >
           <IconOutdent />
         </button>
@@ -255,7 +265,7 @@ export function LayerTree({
           aria-keyshortcuts="Alt+ArrowRight"
           title="Move into the container above, one level down (Alt+→)"
           disabled={!!disabled || !sel || !indent(root, sel, accepts)}
-          onClick={() => actions.in()}
+          onClick={() => sel && moves.in(sel)}
         >
           <IconIndent />
         </button>
@@ -288,7 +298,8 @@ export function LayerTree({
             <li key={path.join('.') || 'root'} role="none" className="tree-item">
               <div
                 role="treeitem"
-                tabIndex={0}
+                // Roving tabindex: Tab reaches the tree once, on the selected row.
+                tabIndex={samePath(sel ?? [], path) ? 0 : -1}
                 data-path={path.join('.')}
                 aria-selected={samePath(sel, path)}
                 aria-level={depth + 1}

@@ -109,6 +109,41 @@ try {
     await page.locator('.phone-body').getByText('I already have an account').waitFor()
   })
 
+  await check(
+    'layers keyboard: one tab stop, arrows focus, Enter selects, Alt+arrows move',
+    async () => {
+      await page.goto(`${BASE}?fresh#/screens/welcome`)
+      const rows = page.getByRole('treeitem')
+      const tabStops = () =>
+        rows.evaluateAll((els) =>
+          els.filter((e) => e.tabIndex === 0).map((e) => e.querySelector('.tree-type').textContent),
+        )
+      const focused = () =>
+        page.evaluate(() => document.activeElement?.querySelector('.tree-type')?.textContent)
+      const selected = () =>
+        page.locator('[role="treeitem"][aria-selected="true"] .tree-type').textContent()
+      assert.deepEqual(await tabStops(), ['Hero'])
+      await rows.filter({ hasText: 'Fresh beans' }).focus()
+      await page.keyboard.press('ArrowDown')
+      assert.equal(await focused(), 'List')
+      assert.equal(await selected(), 'Hero')
+      await page.keyboard.press('Enter')
+      assert.equal(await selected(), 'List')
+      assert.deepEqual(await tabStops(), ['List'])
+      // Alt+arrows on a row that is not selected select it, then move it.
+      await page.keyboard.press('ArrowUp')
+      const url = page.url()
+      await page.keyboard.press('Alt+ArrowDown')
+      assert.equal(await selected(), 'Hero')
+      assert.equal(await focused(), 'Hero')
+      assert.equal(await rows.nth(2).locator('.tree-type').textContent(), 'Hero')
+      // A top-level layer cannot move out; Alt+Left must not reach the browser either.
+      await page.keyboard.press('Alt+ArrowLeft')
+      assert.equal(page.url(), url)
+      await page.getByText('Level 1 · in Stack').waitFor()
+    },
+  )
+
   await check('palette: adding every component keeps the preview rendered', async () => {
     await page.goto(`${BASE}?fresh#/screens/welcome`)
     const chips = page.locator('.palette .chip')
