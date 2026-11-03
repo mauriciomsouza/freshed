@@ -894,12 +894,16 @@ pre,
   flex: 1;
   min-height: 0;
   overflow: auto;
+  /* The end slot grows to fill the space under the last row, so all of it accepts drops. */
+  display: flex;
+  flex-direction: column;
 }
 .layers .tree[aria-disabled='true'] {
   opacity: 0.6;
 }
 .tree-item {
   position: relative;
+  flex: none;
 }
 .tree-row {
   user-select: none;
@@ -942,7 +946,7 @@ pre,
 }
 .tree-end {
   position: relative;
-  min-height: 32px;
+  flex: 1 0 32px;
 }
 .palette {
   flex: none;
