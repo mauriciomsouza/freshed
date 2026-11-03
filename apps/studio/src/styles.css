@@ -855,7 +855,7 @@ pre,
 .layers-bar {
   display: flex;
   align-items: center;
-  gap: 1px;
+  gap: 2px;
   height: 36px;
   padding: 0 6px 0 var(--space-4);
   border-bottom: 1px solid var(--line);
@@ -865,6 +865,7 @@ pre,
   flex: 1;
 }
 .layers-bar .icon-btn {
+  /* 24 px wide so "Level 3 · in Stack" still fits beside five buttons at 1440 px. */
   height: 26px;
   width: 24px;
   flex: none;
@@ -916,7 +917,7 @@ pre,
 }
 .tree-row.drop-inside {
   background: var(--signal-soft);
-  box-shadow: inset 0 0 0 1.5px var(--signal);
+  box-shadow: inset 0 0 0 2px var(--signal);
 }
 .drop-line {
   position: absolute;
