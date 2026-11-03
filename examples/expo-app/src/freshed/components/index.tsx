@@ -119,9 +119,10 @@ export const Button = defineComponent(
 const aspect = { square: 1, wide: 16 / 9, tall: 3 / 4 } as const
 
 export const Image = defineComponent(specs.Image, ({ src, alt, aspect: a, rounded }) =>
-  isAsset(src) ? (
+  isAsset(src) || !src ? (
     <View accessible accessibilityRole="image" accessibilityLabel={alt}>
-      <Illustration name={src.slice(6)} tone="cream" height={a === 'wide' ? 150 : 220} />
+      {/* A missing src shows the bundled placeholder art instead of an empty image. */}
+      <Illustration name={src ? src.slice(6) : ''} tone="cream" height={a === 'wide' ? 150 : 220} />
     </View>
   ) : (
     <RNImage
@@ -176,27 +177,35 @@ export const Card = defineComponent(
   },
 )
 
-export const List = defineComponent(specs.List, ({ items, style }) => (
-  <View style={{ gap: space.sm }} accessibilityRole="list">
-    {items.map((item, i) => (
-      <View
-        key={`${i}-${item}`}
-        style={{ flexDirection: 'row', gap: space.sm, alignItems: 'flex-start' }}
-      >
-        {style === 'check' ? (
-          <View style={styles.check}>
-            <View style={styles.checkMark} />
-          </View>
-        ) : (
-          <RNText style={[type.body, { color: color.accent, width: 18 }]}>
-            {style === 'number' ? `${i + 1}.` : '•'}
-          </RNText>
-        )}
-        <RNText style={[type.body, { color: color.ink, flex: 1 }]}>{item}</RNText>
-      </View>
-    ))}
-  </View>
-))
+/**
+ * Required props can still be missing at runtime (an older screen, a hand-edited draft); the
+ * renderer passes the node on and leaves it to the component, so List and Image cope.
+ */
+export const List = defineComponent(specs.List, ({ items, style }) => {
+  const list = Array.isArray(items) ? items : []
+  if (!list.length) return null
+  return (
+    <View style={{ gap: space.sm }} accessibilityRole="list">
+      {list.map((item, i) => (
+        <View
+          key={`${i}-${item}`}
+          style={{ flexDirection: 'row', gap: space.sm, alignItems: 'flex-start' }}
+        >
+          {style === 'check' ? (
+            <View style={styles.check}>
+              <View style={styles.checkMark} />
+            </View>
+          ) : (
+            <RNText style={[type.body, { color: color.accent, width: 18 }]}>
+              {style === 'number' ? `${i + 1}.` : '•'}
+            </RNText>
+          )}
+          <RNText style={[type.body, { color: color.ink, flex: 1 }]}>{item}</RNText>
+        </View>
+      ))}
+    </View>
+  )
+})
 
 export const Spacer = defineComponent(specs.Spacer, ({ size }) =>
   size === 'flex' ? (
