@@ -11,7 +11,7 @@ import {
 } from '@freshed-cms/react-native'
 import { components as brewComponents } from '@freshed-cms/example-expo-app/registry'
 import type { ComponentDefinition, Screen } from '@freshed-cms/schema'
-import { useCallback, useMemo, useState } from 'react'
+import { Component, useCallback, useMemo, useState, type ReactNode } from 'react'
 import { Text, View } from 'react-native'
 import { aiComponents } from './ai-components'
 
@@ -48,6 +48,40 @@ function PreviewFallback({ node }: FallbackProps) {
       </Text>
     </View>
   )
+}
+
+/**
+ * A component that throws (for example on a prop it did not expect) shows a
+ * message inside the device instead of taking the whole Studio down. The
+ * next edit to the screen tries again.
+ */
+class PreviewBoundary extends Component<
+  { screen: Screen; children: ReactNode },
+  { error: Error | null; screen: Screen }
+> {
+  override state = { error: null as Error | null, screen: this.props.screen }
+
+  static getDerivedStateFromError(error: unknown) {
+    return { error: error instanceof Error ? error : new Error(String(error)) }
+  }
+
+  static getDerivedStateFromProps(
+    props: { screen: Screen },
+    state: { error: Error | null; screen: Screen },
+  ) {
+    return props.screen === state.screen ? null : { error: null, screen: props.screen }
+  }
+
+  override render() {
+    const { error } = this.state
+    if (!error) return this.props.children
+    const message = error.message.trim().replace(/\.$/, '') || 'Unknown error'
+    return (
+      <div className="phone-error" role="alert">
+        This screen could not render: {message}. Check the props of the last edited layer.
+      </div>
+    )
+  }
 }
 
 export function usePreviewLog() {
@@ -109,7 +143,9 @@ export function ScreenPreview({
       onWarning={onWarning}
     >
       <div className="phone-body">
-        <ScreenRenderer screen={screen} handlers={handlers} />
+        <PreviewBoundary screen={screen}>
+          <ScreenRenderer screen={screen} handlers={handlers} />
+        </PreviewBoundary>
       </div>
     </FreshedProvider>
   )

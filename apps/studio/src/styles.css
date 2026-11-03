@@ -1215,6 +1215,19 @@ pre,
   color: #5e5047;
   font-size: 13px;
 }
+/* Fixed hues, like the unknown-component fallback: it sits on the app's background. */
+.phone-body > .phone-error {
+  flex-grow: 0;
+  margin: 16px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px dashed #c4323a;
+  background: #fcebec;
+  color: #9c1f27;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.45;
+}
 
 .log {
   margin: 0 var(--space-4) var(--space-4);
