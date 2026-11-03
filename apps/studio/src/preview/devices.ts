@@ -216,12 +216,23 @@ export function withAspect(s: DeviceSettings, id: AspectId): DeviceSettings {
   return { ...s, custom: { width: short, height: clampSide((short * a.long) / a.short) } }
 }
 
-/** Set the oriented width or height by hand; stored as a portrait override. */
-export function withSize(s: DeviceSettings, side: 'width' | 'height', value: number) {
+/**
+ * Set the oriented width or height by hand; stored as a portrait override.
+ * The typed value stays on its axis: a width longer than the height turns
+ * the device to landscape, a height longer than the width to portrait.
+ */
+export function withSize(
+  s: DeviceSettings,
+  side: 'width' | 'height',
+  value: number,
+): DeviceSettings {
   const d = resolveDevice(s)
   const next = { width: d.width, height: d.height, [side]: clampSide(value) }
+  const orientation: Orientation =
+    next.width > next.height ? 'landscape' : next.height > next.width ? 'portrait' : s.orientation
   return {
     ...s,
+    orientation,
     custom: { width: Math.min(next.width, next.height), height: Math.max(next.width, next.height) },
   }
 }

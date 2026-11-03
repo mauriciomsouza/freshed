@@ -179,6 +179,15 @@ try {
     await page.getByLabel('Device', { exact: true }).selectOption('ios-standard')
     await page.getByRole('button', { name: 'Safe area' }).click()
     assert.equal(await frame.locator('.safe-band').count(), 0)
+    // A typed width stays the width, turning the device to landscape when it is the long side.
+    const landscape = page.getByRole('button', { name: 'Landscape' })
+    await page.getByLabel('Width in points').fill('1000')
+    await page.getByLabel('Width in points').press('Enter')
+    assert.deepEqual(await size(), [1000 + 24, 852 + 24])
+    assert.equal(await landscape.getAttribute('aria-pressed'), 'true')
+    await page.getByLabel('Device', { exact: true }).selectOption('ios-standard')
+    await landscape.click()
+    assert.deepEqual(await size(), [393 + 24, 852 + 24])
   })
 
   await check('playground layers edit the JSON', async () => {

@@ -72,9 +72,44 @@ describe('resolving settings', () => {
     const land = { ...DEFAULT_SETTINGS, orientation: 'landscape' as const }
     const d = resolveDevice(withSize(land, 'width', 1000))
     expect([d.width, d.height]).toEqual([1000, 393])
-    expect(resolveDevice(withSize(DEFAULT_SETTINGS, 'height', 5)).height).toBe(393)
+    expect(resolveDevice(withSize(DEFAULT_SETTINGS, 'height', 5))).toMatchObject({
+      width: 393,
+      height: 240,
+    })
     expect(clampSide(99999)).toBe(1600)
     expect(clampSide(Number.NaN)).toBe(240)
+  })
+
+  it('keeps a typed size on its axis, rotating when it becomes the long side', () => {
+    // Portrait 393×852: a width of 1000 makes the screen wider than tall.
+    const wide = withSize(DEFAULT_SETTINGS, 'width', 1000)
+    expect(wide.orientation).toBe('landscape')
+    expect(resolveDevice(wide)).toMatchObject({ width: 1000, height: 852 })
+
+    // Landscape 852×393: a height of 900 makes it taller than wide.
+    const land = { ...DEFAULT_SETTINGS, orientation: 'landscape' as const }
+    const tall = withSize(land, 'height', 900)
+    expect(tall.orientation).toBe('portrait')
+    expect(resolveDevice(tall)).toMatchObject({ width: 852, height: 900 })
+
+    // Within the current orientation nothing rotates.
+    const narrow = withSize(DEFAULT_SETTINGS, 'width', 320)
+    expect(narrow.orientation).toBe('portrait')
+    expect(resolveDevice(narrow)).toMatchObject({ width: 320, height: 852 })
+    const short = withSize(land, 'height', 300)
+    expect(short.orientation).toBe('landscape')
+    expect(resolveDevice(short)).toMatchObject({ width: 852, height: 300 })
+
+    // A square keeps the orientation it had.
+    for (const s of [DEFAULT_SETTINGS, land]) {
+      const square = withSize(s, s.orientation === 'portrait' ? 'width' : 'height', 852)
+      expect(square.orientation).toBe(s.orientation)
+      expect(resolveDevice(square)).toMatchObject({ width: 852, height: 852 })
+    }
+
+    // Clamping applies before the comparison.
+    const huge = withSize(DEFAULT_SETTINGS, 'height', 99999)
+    expect(resolveDevice(huge)).toMatchObject({ width: 393, height: 1600 })
   })
 
   it('parses stored settings defensively', () => {
