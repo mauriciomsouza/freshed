@@ -6,6 +6,15 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+
+- Studio: device preview with presets for iOS and Android phones and tablets, an aspect ratio
+  selector, custom width and height in points, portrait and landscape, Fit or 100% zoom, and
+  safe-area insets with optional guides. Screens lay out at the device's real logical size.
+- Studio: layers panel in the screen editor and the playground. Drag layers to reorder and nest
+  them, drag components in from a palette, and change a layer's level with the toolbar or
+  Alt+arrow keys. The playground's layers edit its JSON.
+
 ## [0.1.0] - 2026-11-01
 
 ### Added
