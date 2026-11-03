@@ -64,6 +64,8 @@ export function LayerTree({
   const selNode = sel ? getAt(root, sel) : undefined
 
   const accepts = (n: ScreenNode | undefined) => !!n && !!registry.get(n.type)?.children
+  // New layers get placeholders for their required props, so they render straight away.
+  const create = (type: string) => newNode(type, registry.get(type))
 
   // Keep keyboard focus on a layer after it moves.
   useEffect(() => {
@@ -75,7 +77,7 @@ export function LayerTree({
 
   const allowed = (drag: Drag, slot: Slot | null): slot is Slot => {
     if (!slot || !accepts(getAt(root, slot.parent))) return false
-    if (drag.kind === 'component') return fitsDepth(slot.parent, newNode(drag.type))
+    if (drag.kind === 'component') return fitsDepth(slot.parent, create(drag.type))
     const node = getAt(root, drag.path)
     return !!node && !isPrefix(drag.path, slot.parent) && fitsDepth(slot.parent, node)
   }
@@ -109,7 +111,7 @@ export function LayerTree({
     setDraggingPath(null)
     if (!drag || !allowed(drag, slot)) return
     if (drag.kind === 'component') {
-      const r = insertAt(root, slot.parent, slot.index, newNode(drag.type))
+      const r = insertAt(root, slot.parent, slot.index, create(drag.type))
       onChange(r.root, r.path, `Added ${drag.type}`)
       return
     }
@@ -193,7 +195,7 @@ export function LayerTree({
     candidates.push({ parent: [], index: root.children?.length ?? 0 })
     const slot = candidates.find((s) => allowed({ kind: 'component', type }, s))
     if (!slot) return
-    const r = insertAt(root, slot.parent, slot.index, newNode(type))
+    const r = insertAt(root, slot.parent, slot.index, create(type))
     onChange(r.root, r.path, `Added ${type}`)
   }
 

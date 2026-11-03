@@ -1,4 +1,12 @@
-import { MAX_DEPTH, type ScreenNode } from '@freshed-cms/schema'
+import { brewComponents } from '@freshed-cms/example-brew'
+import {
+  checkPropValue,
+  MAX_DEPTH,
+  prop,
+  validateScreen,
+  type ComponentDefinition,
+  type ScreenNode,
+} from '@freshed-cms/schema'
 import { describe, expect, it } from 'vitest'
 import {
   dropSlot,
@@ -140,5 +148,59 @@ describe('layer levels', () => {
     expect(r.path).toEqual([3, 0])
     expect(getAt(r.root, r.path)?.type).toBe('Text')
     expect(newNode('Card').id).toMatch(/^card-[a-z0-9]+$/)
+  })
+})
+
+describe('new layers', () => {
+  const screenWith = (node: ScreenNode) => ({
+    slug: 'new',
+    title: 'New',
+    root: { type: 'Stack', children: [node] },
+  })
+
+  it('seed required props so every Brew component validates when added', () => {
+    for (const def of brewComponents) {
+      const node = newNode(def.name, def)
+      const r = validateScreen(screenWith(node), brewComponents)
+      expect(
+        r.issues.filter((i) => i.severity === 'error'),
+        def.name,
+      ).toEqual([])
+    }
+  })
+
+  it('leave optional props and props with a default unset', () => {
+    const button = brewComponents.find((c) => c.name === 'Button')!
+    const props = newNode('Button', button).props ?? {}
+    expect(Object.keys(props).sort()).toEqual(['action', 'label'])
+    expect(props.action).toEqual({ type: 'emit', event: 'tap' })
+    const list = brewComponents.find((c) => c.name === 'List')!
+    expect(newNode('List', list).props?.items).toHaveLength(1)
+  })
+
+  it('make a valid placeholder for every prop type and its limits', () => {
+    const def: ComponentDefinition = {
+      name: 'Everything',
+      props: {
+        s: prop.string({ required: true, maxLength: 3 }),
+        n: prop.number({ required: true, min: 5, max: 9 }),
+        neg: prop.number({ required: true, max: -2 }),
+        b: prop.boolean({ required: true }),
+        e: prop.enum(['b', 'a'], { required: true }),
+        i: prop.image({ required: true }),
+        a: prop.action({ required: true }),
+        l: prop.stringList({ required: true, maxItems: 1 }),
+      },
+    }
+    const props = newNode(def.name, def).props ?? {}
+    for (const [name, spec] of Object.entries(def.props)) {
+      expect(checkPropValue(spec, props[name]), name).toBeNull()
+    }
+    expect(props.e).toBe('b')
+    expect(props.n).toBe(5)
+  })
+
+  it('works without a definition', () => {
+    expect(newNode('Mystery').props).toEqual({})
   })
 })

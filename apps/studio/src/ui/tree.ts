@@ -1,4 +1,12 @@
-import { MAX_DEPTH, measure, type ScreenNode } from '@freshed-cms/schema'
+import {
+  checkPropValue,
+  MAX_DEPTH,
+  measure,
+  type ComponentDefinition,
+  type PropSpec,
+  type PropValue,
+  type ScreenNode,
+} from '@freshed-cms/schema'
 
 /** Path-addressed immutable tree edits used by the screen editor. */
 export type Path = number[]
@@ -141,12 +149,43 @@ export function fitsDepth(parent: Path, node: ScreenNode, max = MAX_DEPTH): bool
   return parent.length + 1 + measure(node).depth <= max
 }
 
-/** A fresh node of a registered type, with a short readable id. */
-export function newNode(type: string): ScreenNode {
+/**
+ * A fresh node of a registered type, with a short readable id. Required props
+ * without a default get a valid placeholder, so the new layer renders and
+ * validates straight away instead of reaching the component without them.
+ */
+export function newNode(type: string, def?: ComponentDefinition): ScreenNode {
+  const props: Record<string, PropValue> = {}
+  for (const [name, spec] of Object.entries(def?.props ?? {})) {
+    if (!spec.required || ('default' in spec && spec.default !== undefined)) continue
+    const value = placeholder(spec, type)
+    if (value !== undefined && checkPropValue(spec, value) === null) props[name] = value
+  }
   return {
     id: `${type.toLowerCase()}-${Math.random().toString(36).slice(2, 6)}`,
     type,
-    props: {},
+    props,
+  }
+}
+
+/** A short valid value for a prop, derived from its spec. Bundled art for images. */
+function placeholder(spec: PropSpec, type: string): PropValue | undefined {
+  const label = (text: string) => text.slice(0, spec.type === 'string' ? spec.maxLength : undefined)
+  switch (spec.type) {
+    case 'string':
+      return label(type)
+    case 'string[]':
+      return [`${type} item`]
+    case 'enum':
+      return spec.values[0]
+    case 'number':
+      return spec.min ?? (spec.max !== undefined && spec.max < 0 ? spec.max : 0)
+    case 'boolean':
+      return false
+    case 'image':
+      return 'asset:beans'
+    case 'action':
+      return { type: 'emit', event: 'tap' }
   }
 }
 
