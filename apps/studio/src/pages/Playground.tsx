@@ -82,7 +82,7 @@ export function PlaygroundPage() {
     <div className="page-body">
       <section className="col col-edit" aria-label="Playground">
         <div className="col-head">
-          <span className="col-title">Screen JSON</span>
+          <span className="col-title">Layers and JSON</span>
           <span className="spacer" />
           <button
             className="btn btn-sm"
@@ -113,7 +113,11 @@ export function PlaygroundPage() {
             onSelect={setSelected}
             registry={registry}
             components={workspace.components}
-            disabled={current ? undefined : 'Fix the JSON to edit the layers again.'}
+            disabled={
+              current
+                ? undefined
+                : 'Showing the last valid JSON. Fix the JSON to edit the layers again.'
+            }
             onChange={(root, path, note) => {
               setText(JSON.stringify({ ...screen, root }, null, 2))
               setSelected(path)

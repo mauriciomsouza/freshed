@@ -253,7 +253,7 @@ export function LayerTree({
           className="btn btn-ghost icon-btn"
           aria-label="Move out of parent"
           aria-keyshortcuts="Alt+ArrowLeft"
-          title="Move out of its parent, one level up (Alt+←)"
+          title="Move out of its parent (Alt+←)"
           disabled={!!disabled || !sel || !outdent(root, sel)}
           onClick={() => sel && moves.out(sel)}
         >
@@ -261,9 +261,9 @@ export function LayerTree({
         </button>
         <button
           className="btn btn-ghost icon-btn"
-          aria-label="Move into previous container"
+          aria-label="Move into container above"
           aria-keyshortcuts="Alt+ArrowRight"
-          title="Move into the container above, one level down (Alt+→)"
+          title="Move into the container above (Alt+→)"
           disabled={!!disabled || !sel || !indent(root, sel, accepts)}
           onClick={() => sel && moves.in(sel)}
         >
@@ -284,7 +284,7 @@ export function LayerTree({
         ref={list}
         className="tree"
         role="tree"
-        aria-label="Component tree"
+        aria-label="Layers"
         aria-disabled={!!disabled || undefined}
         onDragLeave={(e) => {
           if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setDropIfChanged(null)
@@ -388,7 +388,7 @@ export function LayerTree({
       {!disabled ? (
         <div className="palette">
           <div className="palette-head" id={paletteId}>
-            Drag a component into the layers, or press it to add it at the selection.
+            Drag a component into the layers, or click it to add it at the selection.
           </div>
           <div className="palette-items" role="group" aria-labelledby={paletteId}>
             {components.map((c) => (

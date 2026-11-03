@@ -171,7 +171,7 @@ function DeviceBar({
           </optgroup>
         ))}
         {settings.custom ? (
-          <option value="custom">Custom, {device.preset.name} safe area</option>
+          <option value="custom">Custom · {device.preset.name} safe area</option>
         ) : null}
       </select>
       <select
@@ -203,7 +203,7 @@ function DeviceBar({
       <button
         className="btn btn-sm"
         aria-pressed={settings.safeArea}
-        title={`Show the safe-area insets: top ${device.insets.top}, right ${device.insets.right}, bottom ${device.insets.bottom}, left ${device.insets.left}`}
+        title={`Safe-area insets in pt: top ${device.insets.top}, right ${device.insets.right}, bottom ${device.insets.bottom}, left ${device.insets.left}`}
         onClick={() => update((s) => ({ ...s, safeArea: !s.safeArea }))}
       >
         <IconSafeArea />
