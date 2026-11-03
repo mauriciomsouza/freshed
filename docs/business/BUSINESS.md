@@ -43,6 +43,10 @@ documentation before comparing.
 missing component on a review branch. Most AI UI tools generate code that becomes the product;
 freshed generates data within an existing design system, plus small, reviewable components.
 
+The Studio's drag-and-drop layers and device preview are editing aids, not a no-code app builder.
+Editors arrange only the components the app already ships, nest them only where the registry
+allows and change them only through declared props. The design system and logic stay in app code.
+
 ## Sustainability: open core
 
 - **MIT, forever:** protocol and schemas, renderer, server, Studio, CLI and freshed ai. Everything
@@ -68,6 +72,10 @@ freshed generates data within an existing design system, plus small, reviewable 
 ## Assumptions to test
 
 - Teams will register 10 to 30 components before they get value. (Interview design partners.)
-- Non-engineers will edit in the Studio once components exist. (Watch first sessions.)
+- Non-engineers will edit in the Studio once components exist. (Watch first sessions: can they
+  add, reorder and nest components in the layers panel without JSON mode or an engineer?)
+- Previewing at device sizes with safe areas catches layout problems before publish. (Ask design
+  partners to tag rollbacks caused by layout on a device class: clipped, overflowing, under the
+  notch or home bar.)
 - AI drafts save time only if the registry is well described. (Compare publish rates with and
   without component descriptions.)
