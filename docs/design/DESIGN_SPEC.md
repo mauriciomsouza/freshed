@@ -63,7 +63,7 @@ both themes. Dark mode follows the system and can be overridden (`data-theme`).
 | List item         | Title + monospace slug; status dot (live/draft/new) at the right                  |
 | Tree row          | 30 px, 16 px indent with guide lines, type glyph, component name, summary         |
 | Layers            | Tree rows drag to reorder and nest (see below); toolbar with level and actions    |
-| Palette           | Registered components as chips under the layers; drag to place, press to add      |
+| Palette           | Registered components as chips under the layers; drag to place, click to add      |
 | Prop field        | Label + monospace type + `required`; control by prop type (see below)             |
 | Segmented control | Enums with up to 4 values; selects for longer enums                               |
 | Switch            | Booleans                                                                          |
@@ -72,7 +72,7 @@ both themes. Dark mode follows the system and can be overridden (`data-theme`).
 | Issue row         | Soft red (error) or soft amber (warning) with the path in monospace               |
 | Device bar        | Device select (size in pt), aspect ratio select, rotate, Safe area toggle         |
 | Device frame      | Drawn at the device's size in pt, scaled to fit; status bar, cutout, home bar     |
-| Device readout    | Under the frame: width × height inputs in pt, ratio, zoom %, Fit / 100%           |
+| Device readout    | Under the frame: width × height inputs in pt; Fit (with its zoom %) / 100%        |
 | Action log        | Monospace list under the phone: `screen  emit "next"`                             |
 | Timeline          | Version history with a live node in green                                         |
 | Diff block        | File header + status tag; added lines on `--live-soft` with a `+` gutter          |
@@ -86,12 +86,22 @@ both themes. Dark mode follows the system and can be overridden (`data-theme`).
 - Feedback: a 2 px signal line with a dot at the depth the node will land, or a signal outline on
   the container it will enter. The dragged row and its subtree fade to 40%. Drops that would put a
   node inside itself, into a leaf, or deeper than the schema's depth limit are not offered.
-- The toolbar shows the selected layer's level ("Level 2 · in Card", "Root") and moves it up,
-  down, out of its parent (one level up) and into the container above (one level down), or
-  removes it. Every drag has a keyboard equivalent: Alt+↑/↓ reorder, Alt+←/→ change the level,
-  ↑/↓ move between rows, Enter selects.
+- Levels count from the root, which is level 0 and shows as "Root"; its direct children are
+  "Level 1". The toolbar shows the selected layer's level and parent ("Level 2 · in Card") and
+  moves it up, down, out of its parent and into the container above, or removes it.
+- Keyboard: the tree is one tab stop, on the selected row (the root when nothing is selected).
+  ↑/↓ move focus between rows without selecting; Enter, Space or a click selects. Alt+↑/↓
+  reorder and Alt+←/→ change the level of the focused row, selecting it first; Alt+arrows never
+  reach the browser, so Alt+←/→ do not go back or forward in history. Focus follows a moved
+  layer. Every drag has this keyboard equivalent, and palette chips add on Enter or Space.
+- New layers from the palette get a placeholder for every required prop without a default (the
+  component name, one list item, the first enum value, a bundled image, an `emit` action), so
+  they render and validate at once.
 - The same panel serves the screen editor and the playground, where edits rewrite the JSON. The
-  playground locks the layers while its JSON does not parse or cannot render.
+  playground locks the layers while its JSON does not parse or cannot render: "Showing the last
+  valid JSON. Fix the JSON to edit the layers again." Copy in the panel: palette hint "Drag a
+  component into the layers, or click it to add it at the selection."; toolbar "Move out of its
+  parent (Alt+←)" and "Move into the container above (Alt+→)".
 
 ### Device preview
 
@@ -114,11 +124,21 @@ remembered per browser.
 - Insets are typical for each class of device, not one model's exact figures. Names are generic:
   the preview is about layout classes, not brands.
 - Picking an aspect ratio (4:3, 3:2, 16:10, 16:9, 18:9, 19.5:9, 20:9, 21:9) keeps the short side
-  and sets the long side; typing a width or height (240–1600 pt) does the same by hand. Both turn
-  the device into "Custom", which keeps the preset's safe area and chrome.
+  and sets the long side; ratios whose long side would pass 1600 pt (21:9 on a tablet) are
+  disabled. Typing a width or height (240–1600 pt) keeps it on that axis and turns the device to
+  landscape or portrait when it becomes the long side. Both show the device as "Custom · <preset>
+  safe area", which keeps the preset's safe area and chrome.
 - **Safe area** draws hatched bands over the unsafe edges, each labelled with its inset in pt, and
-  a dashed outline around the safe area. The guides use the `--guide` tokens, the light signal
-  ultramarine in both themes, because they sit on the app's own background, not the Studio's.
+  a dashed outline around the safe area. Labels sit off-centre (75% across the top and bottom
+  bands, a quarter down the side bands) so they never cover the cutout or the home bar. The
+  guides use the `--guide` tokens, the light signal ultramarine in both themes, because they sit
+  on the app's own background, not the Studio's. The button's tooltip lists the insets ("Safe-area
+  insets in pt: top 59, right 0, bottom 34, left 0").
+- In narrow preview columns (under 440 px, like the AI page) the Safe area button shows only its
+  icon and keeps "Safe area" as its accessible name, so the device select is not cut off.
+- A component that throws while rendering shows an inline alert inside the device ("This screen
+  could not render: … Check the props of the last edited layer.") instead of breaking the Studio;
+  the next edit renders again.
 
 Prop controls: `string` input (textarea when multiline or long, with a character counter),
 `number` input, `boolean` switch, `enum` segmented or select, `image` input (`asset:` or https),
@@ -183,7 +203,8 @@ generating. `prefers-reduced-motion` disables all of it.
 ## Accessibility checklist
 
 - Every interactive element is a real `button`, `a`, `input` or has a role; tree rows use
-  `treeitem` with `aria-selected` and `aria-level`.
+  `treeitem` with `aria-selected` and `aria-level` in a `tree` labelled "Layers", with a roving
+  tabindex (one tab stop on the selected row).
 - Visible 2 px focus ring in the signal color.
 - Toasts use `role="status"`; validation lists are labelled.
 - The device frame is a labelled region; preview components keep their own roles and labels.
