@@ -33,6 +33,7 @@ photographer's light table: a quiet, evenly lit surface you lay work on to judge
 | `--live`   | `#1d7f4e` | `#52c48a` | Published, valid                      |
 | `--danger` | `#c4323a` | `#f0767b` | Errors, destructive                   |
 | `--table`  | `#ececef` | `#0c0c0f` | The light table behind previews       |
+| `--guide`  | `#3346d3` | `#3346d3` | Safe-area guides, same in both themes |
 
 Each state hue has a `-soft` background variant for chips and rows. All text pairs meet WCAG AA in
 both themes. Dark mode follows the system and can be overridden (`data-theme`).
@@ -116,8 +117,8 @@ remembered per browser.
   and sets the long side; typing a width or height (240–1600 pt) does the same by hand. Both turn
   the device into "Custom", which keeps the preset's safe area and chrome.
 - **Safe area** draws hatched bands over the unsafe edges, each labelled with its inset in pt, and
-  a dashed outline around the safe area. The guides use the fixed signal ultramarine because they
-  sit on the app's own background, not the Studio's.
+  a dashed outline around the safe area. The guides use the `--guide` tokens, the light signal
+  ultramarine in both themes, because they sit on the app's own background, not the Studio's.
 
 Prop controls: `string` input (textarea when multiline or long, with a character counter),
 `number` input, `boolean` switch, `enum` segmented or select, `image` input (`asset:` or https),

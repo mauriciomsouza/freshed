@@ -52,6 +52,11 @@
   --danger-soft: #fcebec;
   --table: #ececef;
   --table-dot: #d3d3d9;
+  /* Safe-area guides: drawn on the app's own background, so the same in both themes. */
+  --guide: #3346d3;
+  --guide-ink: #ffffff;
+  --guide-hatch: rgba(51, 70, 211, 0.2);
+  --guide-hatch-2: rgba(51, 70, 211, 0.07);
   --shadow-phone:
     0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 30px 60px -28px rgba(23, 23, 40, 0.35),
     0 12px 24px -12px rgba(23, 23, 40, 0.18);
@@ -430,6 +435,11 @@ pre,
   height: 26px;
   padding: 0 8px;
   font-size: var(--text-xs);
+}
+.btn[aria-pressed='true'] {
+  background: var(--signal-soft);
+  border-color: var(--signal-line);
+  color: var(--signal);
 }
 .icon-btn {
   width: 28px;
@@ -847,7 +857,7 @@ pre,
   align-items: center;
   gap: 1px;
   height: 36px;
-  padding: 0 6px 0 12px;
+  padding: 0 6px 0 var(--space-4);
   border-bottom: 1px solid var(--line);
   flex: none;
 }
@@ -938,19 +948,19 @@ pre,
   flex: none;
   max-height: 40%;
   overflow: auto;
-  padding: 10px 12px 12px;
+  padding: var(--space-3) var(--space-4) var(--space-4);
   border-top: 1px solid var(--line);
   background: var(--panel-2);
 }
 .palette-head {
   font-size: var(--text-xs);
   color: var(--text-2);
-  margin-bottom: 8px;
+  margin-bottom: var(--space-2);
 }
 .palette-items {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
+  gap: var(--space-1);
 }
 .chip {
   cursor: grab;
@@ -1068,11 +1078,6 @@ pre,
 .device-bar .btn-sm.icon-btn {
   width: 28px;
 }
-.btn[aria-pressed='true'] {
-  background: var(--signal-soft);
-  border-color: var(--signal-line);
-  color: var(--signal);
-}
 .device-meta {
   font-size: var(--text-xs);
   color: var(--text-2);
@@ -1082,14 +1087,14 @@ pre,
 }
 .device-meta-text {
   font-family: var(--font-code);
-  font-size: 11px;
+  font-size: var(--text-xs);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .device-meta-scale {
   font-family: var(--font-code);
-  font-size: 11px;
+  font-size: var(--text-xs);
   flex: none;
 }
 .size-input {
@@ -1099,7 +1104,7 @@ pre,
   height: 24px;
   padding: 2px 5px;
   font-family: var(--font-code);
-  font-size: 11px;
+  font-size: var(--text-xs);
 }
 .segmented-sm button {
   height: 20px;
@@ -1172,7 +1177,7 @@ pre,
   opacity: 0.85;
   pointer-events: none;
 }
-/* Safe-area guides sit on the app's own (light) background, so they use a fixed hue. */
+/* Guides sit on the app's own (light) background: fixed --guide tokens in both themes. */
 .safe-guides {
   position: absolute;
   inset: 0;
@@ -1182,8 +1187,8 @@ pre,
   position: absolute;
   background: repeating-linear-gradient(
     135deg,
-    rgba(51, 70, 211, 0.2) 0 5px,
-    rgba(51, 70, 211, 0.07) 5px 10px
+    var(--guide-hatch) 0 5px,
+    var(--guide-hatch-2) 5px 10px
   );
 }
 /* Off-centre so the label never covers the island, punch-hole or home bar. */
@@ -1194,10 +1199,10 @@ pre,
   transform: translate(-50%, -50%);
   white-space: nowrap;
   font: 600 13px/1.3 var(--font-code);
-  color: #ffffff;
-  background: #3346d3;
+  color: var(--guide-ink);
+  background: var(--guide);
   padding: 1px 6px;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
 }
 .safe-band-side span {
   left: 50%;
@@ -1205,7 +1210,7 @@ pre,
 }
 .safe-rect {
   position: absolute;
-  outline: 1.5px dashed #3346d3;
+  outline: 1.5px dashed var(--guide);
   outline-offset: -1px;
 }
 .phone-ended {
