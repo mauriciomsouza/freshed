@@ -45,7 +45,8 @@ A few decisions I cared about:
 - Published versions are immutable. Rollback publishes a copy of an older version (a Postgres
   trigger enforces it).
 - The Studio preview runs the same renderer and the same app components through
-  react-native-web, so the preview is the app, not a mock.
+  react-native-web, so the preview is the app, not a mock. It lays screens out at a phone or
+  tablet's logical size, in portrait or landscape, with typical safe-area insets.
 
 It also has freshed ai: one prompt ("add a referral screen after onboarding with a code to copy
 and a share button") creates draft screens in the CMS and, if the app is missing a component,
@@ -72,7 +73,8 @@ what that build can read. Unknown components fall back. Bad publish? Roll back i
 History is append-only.
 
 4/ The preview in the Studio is not a mock. It is your app's components, rendered by the same
-renderer, through react-native-web. Click through a whole onboarding flow in the browser.
+renderer, through react-native-web, at phone and tablet sizes with safe areas. Click through a
+whole onboarding flow in the browser.
 
 5/ freshed ai: one prompt → draft screens in the CMS + the missing component on a git branch,
 wired together. Your key, validated by schema, repaired once or rejected. Humans publish and merge.
@@ -96,4 +98,5 @@ https://github.com/mauriciomsouza/freshed
   without signing up. If you try freshed ai, the key stays in your browser tab. I would love to
   hear which screens you would move to the server first.
 - **Gallery:** `docs/design/screens/screens-editor.png`, `flow-graph.png`, `ai-panel.png`,
-  `version-history.png`, `screens-editor-dark.png`.
+  `device-preview-landscape.png`, `layers-drop.png`, `version-history.png`,
+  `screens-editor-dark.png`.
