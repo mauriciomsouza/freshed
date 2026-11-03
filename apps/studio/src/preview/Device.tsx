@@ -207,7 +207,8 @@ function DeviceBar({
         onClick={() => update((s) => ({ ...s, safeArea: !s.safeArea }))}
       >
         <IconSafeArea />
-        Safe area
+        {/* Visually hidden in narrow previews; it stays the button's accessible name. */}
+        <span className="device-bar-label">Safe area</span>
       </button>
     </div>
   )

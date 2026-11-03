@@ -1023,6 +1023,8 @@ pre,
 .table {
   flex: none;
   width: 460px;
+  /* The device bar compacts itself in narrow preview columns (see below). */
+  container-type: inline-size;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -1114,6 +1116,20 @@ pre,
   height: 20px;
   padding: 0 7px;
   font-size: var(--text-xs);
+}
+/* Narrow preview columns (the AI page, small windows): give the device select the room. */
+@container (max-width: 440px) {
+  .device-bar-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .device-aspect {
+    width: 72px;
+  }
 }
 
 /* ---------- Device frame (drawn in device points, then scaled) ---------- */
