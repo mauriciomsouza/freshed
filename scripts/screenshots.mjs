@@ -58,6 +58,41 @@ async function main() {
       theme: 'light',
       clicks: ['Get started', 'Bright & fruity'],
     },
+    {
+      name: 'device-preview',
+      hash: '#/screens/taste',
+      theme: 'light',
+      device: 'android-compact',
+      safeArea: true,
+    },
+    {
+      name: 'device-preview-dark',
+      hash: '#/screens/taste',
+      theme: 'dark',
+      device: 'android-compact',
+      safeArea: true,
+    },
+    {
+      name: 'device-preview-landscape',
+      hash: '#/screens/taste',
+      theme: 'light',
+      device: 'ios-standard',
+      landscape: true,
+      safeArea: true,
+    },
+    // Mid-drag: the Continue button over a Card, which shows the inside-drop outline.
+    {
+      name: 'layers-drop',
+      hash: '#/screens/taste',
+      theme: 'light',
+      drag: { from: 'Continue', over: 'Balanced & sweet' },
+    },
+    {
+      name: 'layers-drop-dark',
+      hash: '#/screens/taste',
+      theme: 'dark',
+      drag: { from: 'Continue', over: 'Balanced & sweet' },
+    },
     { name: 'playground', hash: '#/playground', theme: 'light' },
     { name: 'version-history', hash: '#/publish', theme: 'light', edit: true },
     { name: 'components', hash: '#/components/Card', theme: 'light' },
@@ -86,6 +121,11 @@ async function main() {
       await page.goto(`http://localhost:4180${BASE}?fresh${shot.hash}`)
       await page.waitForSelector('.timeline')
     }
+    if (shot.device) {
+      await page.getByLabel('Device', { exact: true }).selectOption(shot.device)
+    }
+    if (shot.landscape) await page.getByRole('button', { name: 'Landscape' }).click()
+    if (shot.safeArea) await page.getByRole('button', { name: 'Safe area' }).click()
     for (const label of shot.clicks ?? []) {
       await page.locator('.phone-body').getByText(label, { exact: true }).click()
       await page.waitForTimeout(150)
@@ -94,8 +134,19 @@ async function main() {
       await page.getByRole('button', { name: 'Show an example' }).click()
       await page.waitForSelector('.ai-summary', { timeout: 10000 })
     }
+    if (shot.drag) {
+      // A real pointer drag, held over the middle of the target row for the screenshot.
+      const row = (text) => page.getByRole('treeitem').filter({ hasText: text })
+      const from = await row(shot.drag.from).boundingBox()
+      const over = await row(shot.drag.over).boundingBox()
+      await page.mouse.move(from.x + 60, from.y + from.height / 2)
+      await page.mouse.down()
+      await page.mouse.move(over.x + 60, over.y + over.height / 2, { steps: 12 })
+      await page.locator('.tree-row.drop-inside').waitFor()
+    }
     await page.waitForTimeout(300)
     await page.screenshot({ path: join(out, `${shot.name}.png`) })
+    if (shot.drag) await page.mouse.up()
     console.log(`saved docs/design/screens/${shot.name}.png`)
     await context.close()
   }

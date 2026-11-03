@@ -13,7 +13,8 @@ import { FLOW_END, type Screen } from '@freshed-cms/schema'
 import { useMemo, useState } from 'react'
 import { safeStorage } from '../data/backend'
 import { useStore } from '../data/store'
-import { PhoneFrame, ScreenPreview } from '../preview/Phone'
+import { DevicePreview } from '../preview/Device'
+import { ScreenPreview } from '../preview/Phone'
 import type { Route } from '../router'
 import { IconShield, IconSpark } from '../ui/icons'
 
@@ -388,19 +389,9 @@ export function AiPage({ navigate }: { navigate: (r: Route) => void }) {
                   <div className="table-head">
                     <span className="col-title">{screen.title}</span>
                   </div>
-                  <div className="table-stage" style={{ alignItems: 'start' }}>
-                    <div
-                      style={{
-                        transform: 'scale(0.9)',
-                        transformOrigin: 'top center',
-                        marginBottom: -70,
-                      }}
-                    >
-                      <PhoneFrame label={`Preview of ${screen.title}`}>
-                        <ScreenPreview screen={screen} />
-                      </PhoneFrame>
-                    </div>
-                  </div>
+                  <DevicePreview label={`Preview of ${screen.title}`}>
+                    <ScreenPreview screen={screen} />
+                  </DevicePreview>
                 </div>
               ) : null}
             </div>

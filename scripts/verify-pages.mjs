@@ -76,6 +76,129 @@ try {
     assert.equal(await page.locator('.timeline li').count(), 5)
   })
 
+  await check('layers: drag and drop reorders and nests, Alt+arrows change the level', async () => {
+    await page.goto(`${BASE}?fresh#/screens/welcome`)
+    const row = (text) => page.getByRole('treeitem').filter({ hasText: text })
+    const levels = () =>
+      page
+        .getByRole('treeitem')
+        .evaluateAll((els) =>
+          els.map(
+            (e) => `${e.getAttribute('aria-level')}:${e.querySelector('.tree-type').textContent}`,
+          ),
+        )
+    await row('I already have').dragTo(row('Fresh beans'), { targetPosition: { x: 40, y: 3 } })
+    assert.deepEqual((await levels()).slice(1, 3), ['2:Button', '2:Hero'])
+    await page
+      .locator('.palette .chip')
+      .filter({ hasText: 'Card' })
+      .dragTo(page.locator('.tree-end'))
+    assert.equal((await levels()).at(-1), '2:Card')
+    const card = page.getByRole('treeitem').last()
+    const box = await card.boundingBox()
+    await row('3 items').dragTo(card, { targetPosition: { x: 40, y: box.height / 2 } })
+    assert.equal((await levels()).at(-1), '3:List')
+    await page.getByText('Level 2 · in Card').waitFor()
+    await row('3 items').focus()
+    await page.keyboard.press('Alt+ArrowLeft')
+    assert.equal((await levels()).at(-1), '2:List')
+    await page.keyboard.press('Alt+ArrowUp')
+    await page.keyboard.press('Alt+ArrowDown')
+    await page.keyboard.press('Alt+ArrowRight')
+    assert.equal((await levels()).at(-1), '3:List')
+    await page.locator('.phone-body').getByText('I already have an account').waitFor()
+  })
+
+  await check(
+    'layers keyboard: one tab stop, arrows focus, Enter selects, Alt+arrows move',
+    async () => {
+      await page.goto(`${BASE}?fresh#/screens/welcome`)
+      const rows = page.getByRole('treeitem')
+      const tabStops = () =>
+        rows.evaluateAll((els) =>
+          els.filter((e) => e.tabIndex === 0).map((e) => e.querySelector('.tree-type').textContent),
+        )
+      const focused = () =>
+        page.evaluate(() => document.activeElement?.querySelector('.tree-type')?.textContent)
+      const selected = () =>
+        page.locator('[role="treeitem"][aria-selected="true"] .tree-type').textContent()
+      assert.deepEqual(await tabStops(), ['Hero'])
+      await rows.filter({ hasText: 'Fresh beans' }).focus()
+      await page.keyboard.press('ArrowDown')
+      assert.equal(await focused(), 'List')
+      assert.equal(await selected(), 'Hero')
+      await page.keyboard.press('Enter')
+      assert.equal(await selected(), 'List')
+      assert.deepEqual(await tabStops(), ['List'])
+      // Alt+arrows on a row that is not selected select it, then move it.
+      await page.keyboard.press('ArrowUp')
+      const url = page.url()
+      await page.keyboard.press('Alt+ArrowDown')
+      assert.equal(await selected(), 'Hero')
+      assert.equal(await focused(), 'Hero')
+      assert.equal(await rows.nth(2).locator('.tree-type').textContent(), 'Hero')
+      // A top-level layer cannot move out; Alt+Left must not reach the browser either.
+      await page.keyboard.press('Alt+ArrowLeft')
+      assert.equal(page.url(), url)
+      await page.getByText('Level 1 · in Stack').waitFor()
+    },
+  )
+
+  await check('palette: adding every component keeps the preview rendered', async () => {
+    await page.goto(`${BASE}?fresh#/screens/welcome`)
+    const chips = page.locator('.palette .chip')
+    const rows = page.getByRole('treeitem')
+    const count = await chips.count()
+    assert.ok(count >= 8, `expected the Brew components in the palette, got ${count}`)
+    for (let i = 0; i < count; i++) {
+      const name = await chips.nth(i).evaluate((e) => e.lastChild.textContent)
+      const before = await rows.count()
+      await chips.nth(i).click()
+      assert.equal(await rows.count(), before + 1, `${name} was not added`)
+      await page.waitForTimeout(100)
+      assert.deepEqual(errors, [], `page errors after adding ${name}`)
+      assert.equal(await page.locator('.phone-error').count(), 0, `${name} broke the preview`)
+      await page.locator('.phone-body').getByText('Fresh beans').waitFor()
+    }
+  })
+
+  await check('device bar sets resolution, aspect ratio, orientation and safe area', async () => {
+    await page.goto(`${BASE}?fresh#/screens/welcome`)
+    const frame = page.getByRole('region', { name: 'Preview of Welcome' })
+    const size = () => frame.evaluate((e) => [e.offsetWidth, e.offsetHeight])
+    assert.deepEqual(await size(), [393 + 24, 852 + 24])
+    await page.getByLabel('Device', { exact: true }).selectOption('android-compact')
+    assert.deepEqual(await size(), [360 + 24, 800 + 24])
+    await page.getByRole('button', { name: 'Landscape' }).click()
+    assert.deepEqual(await size(), [800 + 24, 360 + 24])
+    await page.getByRole('button', { name: 'Landscape' }).click()
+    await page.getByLabel('Aspect ratio').selectOption('16:9')
+    assert.equal(await page.getByLabel('Height in points').inputValue(), '640')
+    await page.getByRole('button', { name: 'Safe area' }).click()
+    await frame.locator('.safe-band').first().waitFor()
+    await page.getByLabel('Device', { exact: true }).selectOption('ios-standard')
+    await page.getByRole('button', { name: 'Safe area' }).click()
+    assert.equal(await frame.locator('.safe-band').count(), 0)
+    // A typed width stays the width, turning the device to landscape when it is the long side.
+    const landscape = page.getByRole('button', { name: 'Landscape' })
+    await page.getByLabel('Width in points').fill('1000')
+    await page.getByLabel('Width in points').press('Enter')
+    assert.deepEqual(await size(), [1000 + 24, 852 + 24])
+    assert.equal(await landscape.getAttribute('aria-pressed'), 'true')
+    await page.getByLabel('Device', { exact: true }).selectOption('ios-standard')
+    await landscape.click()
+    assert.deepEqual(await size(), [393 + 24, 852 + 24])
+  })
+
+  await check('playground layers edit the JSON', async () => {
+    await page.goto(`${BASE}#/playground`)
+    const row = (text) => page.getByRole('treeitem').filter({ hasText: text })
+    await row('Send an action').dragTo(row('Edit this JSON'), { targetPosition: { x: 40, y: 3 } })
+    const json = JSON.parse(await page.getByLabel('Screen JSON').inputValue())
+    assert.equal(json.root.children[0].type, 'Button')
+    await page.getByRole('button', { name: 'Reset', exact: true }).click()
+  })
+
   await check('playground renders unknown components as a fallback', async () => {
     await page.goto(`${BASE}#/playground`)
     await page.locator('.phone-body').getByText('Unknown component “Countdown”').waitFor()

@@ -11,15 +11,16 @@ import {
 } from '@freshed-cms/react-native'
 import { components as brewComponents } from '@freshed-cms/example-expo-app/registry'
 import type { ComponentDefinition, Screen } from '@freshed-cms/schema'
-import { useCallback, useMemo, useState, type ReactNode } from 'react'
+import { Component, useCallback, useMemo, useState, type ReactNode } from 'react'
 import { Text, View } from 'react-native'
 import { aiComponents } from './ai-components'
 
 /**
- * The phone frame renders screens with the app's own components and the
- * same renderer package the Expo app uses (react-native aliased to
+ * The preview renders screens with the app's own components and the same
+ * renderer package the Expo app uses (react-native aliased to
  * react-native-web). Components the bundle does not have render the
- * development fallback, exactly as an old build would.
+ * development fallback, exactly as an old build would. The device frame
+ * around it lives in ./Device.tsx.
  */
 
 const registryComponents = [...brewComponents, ...aiComponents]
@@ -49,6 +50,40 @@ function PreviewFallback({ node }: FallbackProps) {
   )
 }
 
+/**
+ * A component that throws (for example on a prop it did not expect) shows a
+ * message inside the device instead of taking the whole Studio down. The
+ * next edit to the screen tries again.
+ */
+class PreviewBoundary extends Component<
+  { screen: Screen; children: ReactNode },
+  { error: Error | null; screen: Screen }
+> {
+  override state = { error: null as Error | null, screen: this.props.screen }
+
+  static getDerivedStateFromError(error: unknown) {
+    return { error: error instanceof Error ? error : new Error(String(error)) }
+  }
+
+  static getDerivedStateFromProps(
+    props: { screen: Screen },
+    state: { error: Error | null; screen: Screen },
+  ) {
+    return props.screen === state.screen ? null : { error: null, screen: props.screen }
+  }
+
+  override render() {
+    const { error } = this.state
+    if (!error) return this.props.children
+    const message = error.message.trim().replace(/\.$/, '') || 'Unknown error'
+    return (
+      <div className="phone-error" role="alert">
+        This screen could not render: {message}. Check the props of the last edited layer.
+      </div>
+    )
+  }
+}
+
 export function usePreviewLog() {
   const [log, setLog] = useState<LogEntry[]>([])
   const push = useCallback((screen: string, event: ActionEvent) => {
@@ -66,50 +101,6 @@ export function usePreviewLog() {
   }, [])
   const clear = useCallback(() => setLog([]), [])
   return { log, push, clear }
-}
-
-export function PhoneFrame({ children, label }: { children: ReactNode; label?: string }) {
-  return (
-    <div className="phone" role="region" aria-label={label ?? 'App preview'}>
-      <div className="phone-screen">
-        <div className="phone-island" aria-hidden />
-        <div className="phone-status" aria-hidden>
-          <span>9:41</span>
-          <span style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
-            <svg width="17" height="11" viewBox="0 0 17 11" fill="currentColor">
-              <rect x="0" y="7" width="3" height="4" rx="1" />
-              <rect x="4.5" y="5" width="3" height="6" rx="1" />
-              <rect x="9" y="2.5" width="3" height="8.5" rx="1" />
-              <rect x="13.5" y="0" width="3" height="11" rx="1" />
-            </svg>
-            <svg width="25" height="12" viewBox="0 0 25 12" fill="none">
-              <rect
-                x="0.5"
-                y="0.5"
-                width="21"
-                height="11"
-                rx="3.5"
-                stroke="currentColor"
-                opacity="0.4"
-              />
-              <rect x="2" y="2" width="16" height="8" rx="2" fill="currentColor" />
-              <rect
-                x="23"
-                y="4"
-                width="1.5"
-                height="4"
-                rx="0.75"
-                fill="currentColor"
-                opacity="0.4"
-              />
-            </svg>
-          </span>
-        </div>
-        {children}
-        <div className="phone-home" aria-hidden />
-      </div>
-    </div>
-  )
 }
 
 export function ScreenPreview({
@@ -152,7 +143,9 @@ export function ScreenPreview({
       onWarning={onWarning}
     >
       <div className="phone-body">
-        <ScreenRenderer screen={screen} handlers={handlers} />
+        <PreviewBoundary screen={screen}>
+          <ScreenRenderer screen={screen} handlers={handlers} />
+        </PreviewBoundary>
       </div>
     </FreshedProvider>
   )
