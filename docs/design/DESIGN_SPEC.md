@@ -156,15 +156,16 @@ The phone always sits on the light table at the right edge so the eye knows wher
 
 ## Screen catalog
 
-| Screen           | Purpose                                                          | Screenshot                                              |
-| ---------------- | ---------------------------------------------------------------- | ------------------------------------------------------- |
-| Screens editor   | Edit a screen as a tree or JSON with live preview and action log | `screens/screens-editor.png`, `screens-editor-dark.png` |
-| Flows            | Graph of screens and events; click through in the phone          | `screens/flow-graph.png`                                |
-| Components       | Registry: specimen, props table, usage, definition               | `screens/components.png`                                |
-| Device preview   | Device presets, aspect ratio, rotation and safe-area guides      | `screens/device-preview.png`, `device-preview-dark.png` |
-| Playground       | Paste JSON or drag layers, see validation and the render         | `screens/playground.png`                                |
-| Publish          | Unpublished changes, publish, history with rollback              | `screens/version-history.png`                           |
-| Generate with AI | Prompt, BYO key, proposed drafts, preview, code diff             | `screens/ai-panel.png`, `ai-panel-dark.png`             |
+| Screen           | Purpose                                                             | Screenshot                                                                              |
+| ---------------- | ------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Screens editor   | Edit a screen as a tree or JSON with live preview and action log    | `screens/screens-editor.png`, `screens-editor-dark.png`                                 |
+| Flows            | Graph of screens and events; click through in the phone             | `screens/flow-graph.png`                                                                |
+| Components       | Registry: specimen, props table, usage, definition                  | `screens/components.png`                                                                |
+| Layers           | Mid-drag: the dragged layer fades, the target container is outlined | `screens/layers-drop.png`, `layers-drop-dark.png`                                       |
+| Device preview   | Device presets, aspect ratio, rotation and safe-area guides         | `screens/device-preview.png`, `device-preview-dark.png`, `device-preview-landscape.png` |
+| Playground       | Paste JSON or drag layers, see validation and the render            | `screens/playground.png`                                                                |
+| Publish          | Unpublished changes, publish, history with rollback                 | `screens/version-history.png`                                                           |
+| Generate with AI | Prompt, BYO key, proposed drafts, preview, code diff                | `screens/ai-panel.png`, `ai-panel-dark.png`                                             |
 
 ## The Brew example app
 
