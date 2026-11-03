@@ -1080,6 +1080,7 @@ pre,
 }
 .device-bar .btn-sm {
   height: 28px;
+  font-size: var(--text-sm);
 }
 .device-bar .btn-sm.icon-btn {
   width: 28px;
@@ -1097,11 +1098,6 @@ pre,
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-.device-meta-scale {
-  font-family: var(--font-code);
-  font-size: var(--text-xs);
-  flex: none;
 }
 .size-input {
   color: var(--text);

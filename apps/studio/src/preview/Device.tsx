@@ -238,17 +238,14 @@ function DeviceMeta({
         value={device.height}
         onCommit={(v) => update((s) => withSize(s, 'height', v))}
       />
-      <span className="device-meta-text">pt · {device.aspect}</span>
+      <span className="device-meta-text">pt</span>
       <span className="spacer" />
-      <span className="device-meta-scale" title="Zoom">
-        {Math.round(scale * 100)}%
-      </span>
       <div className="segmented segmented-sm" role="group" aria-label="Zoom">
         <button
           aria-pressed={settings.zoom === 'fit'}
           onClick={() => update((s) => ({ ...s, zoom: 'fit' }))}
         >
-          Fit
+          {settings.zoom === 'fit' ? `Fit ${Math.round(scale * 100)}%` : 'Fit'}
         </button>
         <button
           aria-pressed={settings.zoom === 'actual'}
